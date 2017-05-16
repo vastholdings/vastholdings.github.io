@@ -5,16 +5,14 @@
     <style>
 
     #button {
-	            width:200px;
-		    height:50px;
-		    position:absolute;
-            border: 5px solid black;
-		    top:100px;
-		    left:200px;
+        width:200px;
+        height:50px;
+        position:absolute;
+        border: 5px solid black;
+        top:100px;
+        left:200px;
     }
-
-
-        </style>
+    </style>
 </head>
 <body>
 
@@ -24,60 +22,26 @@
 
 
 
-<h2>ANNOUNCEMENT: APRIL 18TH 2017-ROCK SHOW OUR HOUSE</h2>
+<h2>ANNOUNCEMENT: JUNE 2ND 2017-RED EYE RACCOON, TUNIC, TEENER, THOM ELLIOT</h2>
 <h3> CLICK HERE FOR ADDRESS</H3>
 
- <button id="button">Click to get my treasures !!</button>
- 
-<script>
-    var button = document.getElementById("button");
-    var browserWidth = window.innerWidth || document.documentElement.clientWidth;
-    var browserHeight = window.innerHeight || document.documentElement.clientHeight;
-    var buttonWidth = button.offsetWidth;
-    var buttonHeight = button.offsetHeight;
-var notset = 0;
-var lolz = [ "Haha nope! Can't catch me", "You are like tiny turtle, too slow", "You will never find our treasures!!", "HAHAHAHAHAAAAA"]
-
- 
-    function move() {
-        button.style.left = Math.floor(Math.random()*(browserWidth-buttonWidth)) + "px";
-        button.style.top = Math.floor(Math.random()*(browserHeight-buttonHeight)) + "px";
-        button.innerHTML = lolz[notset%lolz.length];
-if(notset==0) {
-	setTimeout(function() {
-
-	    button.removeEventListener("mouseover", move)
-	}, 14000)
-}
-notset++;
-
-    }
- 
-    if(typeof addEventListener !== "undefined") {
-        button.addEventListener("mouseover", move, false);
-button.addEventListener("click", function() {
-alert('6420 E Forest Ave 48207\n\n\n\nbe there or be scared');
-});
-    } else if (typeof attachEvent !== "undefined") {
-        button.attachEvent("onmouseover", move);
-button.attachEvent("onclick", function() {
-alert('6420 E Forest Ave 48207 be there or be scared');
-});
-
-    } else {
-        button.onmousover = move;
-    }
-        
- 
-</script>
-<img src="img/AprilBiggz3-small.jpg"></img>
+<button id="button">Click to get my treasures !!</button>
+<script src="index2.js"></script>
+<br />
+<br />
+<img src="img/JUNE2.jpg" style="width:50%;float:center"></img>
 
 
 
-<h2>PAST EVENTS</h2>
+<marquee scrollamount="20"><h1 class="rainbowText">PAST EVENTS</h1></marquee>
+
+<h3>APRIL 18TH 2017 - SAKE MOM, THE STASIS, PERIOD BOMB, DENTAL WORK</h3>
+<a href="img/AprilBiggz3-small.jpg"><img src="img/AprilBiggz3-small.jpg" style="width:200px;"></img></a>
+
+<h3>SEPTEMBER 2016 - BATTTTS IN THE ATTIC</h3>
 <p>HUGE NEW BAT PRODUCT RELEASE COMING IN FUTURE FOR YOUR LIFE NECTER PREORDER NEW ORDER NOW!!!</p>
 
-<h3>DOG WITH SUNGLASSES SAYS DEAL WITH IT</h3>
+<h3>XMAS YEAR 0 AD - DOG WITH SUNGLASSES SAYS DEAL WITH IT</h3>
 <img src=dog.gif>
 </img>
 </center>
