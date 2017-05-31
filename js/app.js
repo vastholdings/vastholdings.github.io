@@ -49,7 +49,7 @@ var game = (function() {
 			corn: {
 				positions: cornEls.map(getOffset),
 				onTouch: function(pos, i) {
-					this.setScore('add', 50);
+                    alert('CORN MAN AWAKENED');
 					this.touchables.corn.positions.splice(i, 1);
 					cornEls[i].parentNode.removeChild(cornEls[i]);
 					cornEls.splice(i, 1);

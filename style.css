@@ -40,11 +40,12 @@ body {
 }
 
 .corn {
-	width: 12px;
-	height: 12px;
 	position: absolute;
-	background: rgb(255, 204, 0);
-    background-image: url("img/corn.png");
+    display:block;
+    background-size: 30px;
+    width: 30px;
+    height: 30px;
+    background: url("img/corn2.png") no-repeat;
 }
 
 
