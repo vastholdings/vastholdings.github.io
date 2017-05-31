@@ -1,5 +1,6 @@
 <html>
 <head>
+<meta charset="UTF-8">
 <title>VASTHOLDINGS.US</title>
 
     <style>
@@ -11,6 +12,8 @@
         border: 5px solid black;
     }
     </style>
+    <link rel="stylesheet" href="style.css">
+    <script src="index2.js"></script>
 </head>
 <body>
 
@@ -22,13 +25,49 @@
 <br />
 <br />
 
-
 <h2 class="rainbowText">ANNOUNCEMENT: JUNE 2ND 2017</h2>
-<span>TUNIC (WINNIPEGGERS), TEENER, THOM ELLIOT, RED EYE RACCOON</span>
-<h3> CLICK HERE FOR ADDRESS</H3>
 
-<button id="button">Click to get my treasures !!</button>
-<script src="index2.js"></script>
+
+
+<span>TUNIC (WINNIPEGGERS), TEENER, THOM ELLIOT, RED EYE RACCOON</span>
+
+
+
+
+<br/>
+<br/>
+<h2>SOLVE THE MAZE TO GET TO THE SHOW</h2>
+	<!-- Game viewport -->
+	<div class='game'>
+		<div class='player' style='left:12px; top:12px;'></div>
+
+		<div class='solid wall' style=' width:240px; left:  0px; top: 48px;'>a</div>
+		<div class='solid wall' style='height:192px; left:288px; top:  0px;'>b</div>
+		<div class='solid wall' style=' width:144px; left:144px; top:144px;'>c</div>
+		<div class="solid wall" style="height:192px; left: 48px; top: 96px;">d</div>
+		<div class="solid wall" style="height:192px; left:144px; top:192px;">e</div>
+		<div class="solid wall" style="height: 96px; left: 48px; top:336px;">f</div>
+		<div class="solid wall" style=" width:144px; left:144px; top:432px;">g</div>
+		<div class="solid wall" style="height:192px; left:240px; top:240px;">h</div>
+		<div class="solid wall" style="height:240px; left:336px; top:240px;">i</div>
+		<div class='solid wall' style='height:240px; left:384px; top: 48px;'>j</div>
+
+		<div class='solid finish' style='left:384px; top:432px;'></div>
+	</div>
+    <button id="left">◀</button>
+    <button id="right">▶</button>
+    <button id="up">▲</button>
+    <button id="down">▼</button>
+
+	<!-- JS -->
+	<script src="js/helpers.js"></script>
+	<script src="js/maze-engine.js"></script>
+	<script src="js/app.js"></script>
+
+
+
+
+
 <br />
 <br />
 <img src="img/JUNE2.jpg" style="width:50%;float:center"></img>
