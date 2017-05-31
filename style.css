@@ -28,7 +28,7 @@ body {
 
 .solid,
 .player,
-.coin {
+.corn {
 	position: absolute;
 }
 
@@ -39,11 +39,12 @@ body {
 	background-color: rgba(0, 125, 0, .3);
 }
 
-.coin {
+.corn {
 	width: 12px;
 	height: 12px;
 	position: absolute;
 	background: rgb(255, 204, 0);
+    background-image: url("img/corn.png");
 }
 
 

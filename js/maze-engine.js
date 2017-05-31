@@ -98,10 +98,17 @@ Game.prototype.init = (function() {
                 updateVector();
             })
 
+
+            document.getElementById(elt).addEventListener('touchcancel', function() {
+                keys[elt]=false;
+                updatevector();
+            })
+
             document.getElementById(elt).addEventListener('touchend', function() {
                 keys[elt]=false;
-                updateVector();
+                updatevector();
             })
+
             document.getElementById(elt).addEventListener('touchstart', function() {
                 keys[elt]=true;
                 updateVector();

@@ -7,7 +7,7 @@ var game = (function() {
 	// Grab necessary game elements:
 	var playerEl  = qs(".player", viewportEl);
 	var scoreEls  = [].slice.call(qsa('.score',  viewportEl));
-	var coinEls   = [].slice.call(qsa('.coin',   viewportEl));
+	var cornEls   = [].slice.call(qsa('.corn',   viewportEl));
 
 	// Get element position:
 	function getOffset(el) {
@@ -46,13 +46,13 @@ var game = (function() {
 		solids: [].map.call(qsa('.solid',  viewportEl), getOffset),
 
 		touchables: {
-			coin: {
-				positions: coinEls.map(getOffset),
+			corn: {
+				positions: cornEls.map(getOffset),
 				onTouch: function(pos, i) {
 					this.setScore('add', 50);
-					this.touchables.coin.positions.splice(i, 1);
-					coinEls[i].parentNode.removeChild(coinEls[i]);
-					coinEls.splice(i, 1);
+					this.touchables.corn.positions.splice(i, 1);
+					cornEls[i].parentNode.removeChild(cornEls[i]);
+					cornEls.splice(i, 1);
 				}
 			},
 			finish: {
