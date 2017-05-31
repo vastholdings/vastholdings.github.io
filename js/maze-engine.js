@@ -97,6 +97,15 @@ Game.prototype.init = (function() {
                 keys[elt]=true;
                 updateVector();
             })
+
+            document.getElementById(elt).addEventListener('touchend', function() {
+                keys[elt]=false;
+                updateVector();
+            })
+            document.getElementById(elt).addEventListener('touchstart', function() {
+                keys[elt]=true;
+                updateVector();
+            })
         });
 	};
 })();
