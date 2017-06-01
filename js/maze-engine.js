@@ -24,15 +24,16 @@ var Game = function(options) {
     this.frameRefresher.start();
 };
 
+var keys = {
+    left: false,
+    right: false,
+    up: false,
+    down: false
+};
 // Update player direction and speed on keypress
 Game.prototype.init = (function() {
     // Which keys are pressed:
-    var keys = {
-        left: false,
-        right: false,
-        up: false,
-        down: false
-    };
+
 
     var keyCodeMap = {
         37: 'left',
@@ -61,9 +62,11 @@ Game.prototype.init = (function() {
 
     return function() {
         var updateVector = updatePlayerVector.bind(this);
+        this.keys = keys;
 
         document.body.addEventListener('keydown', function(event) {
             // update player vector if an arrow key was pressed
+            console.log('keydown');
             if (Object.keys(keyCodeMap).some(function(keyCode) {
                 if (event.keyCode === +keyCode) {
                     var key = keyCodeMap[keyCode];
@@ -76,6 +79,7 @@ Game.prototype.init = (function() {
 
         document.body.addEventListener('keyup', function(e) {
             // update player vector if an arrow key was released
+            console.log('keyup');
             if (Object.keys(keyCodeMap).some(function(keyCode) {
                 if (event.keyCode === +keyCode) {
                     var key = keyCodeMap[keyCode];
@@ -90,10 +94,12 @@ Game.prototype.init = (function() {
         ['left','right','up','down'].forEach(function(elt) {
 
             document.getElementById(elt).addEventListener('mouseup', function() {
+                console.log('up');
                 keys[elt]=false;
                 updateVector();
             })
             document.getElementById(elt).addEventListener('mousedown', function() {
+                console.log('down');
                 keys[elt]=true;
                 updateVector();
             })
