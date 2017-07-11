@@ -32,7 +32,8 @@ body {
 
 .solid,
 .player,
-.corn {
+.corn,
+.santa {
     position: absolute;
 }
 
@@ -42,6 +43,16 @@ body {
     height: 48px;
     background-color: rgba(0, 125, 0, .3);
 }
+
+.santa {
+    position: absolute;
+    display:block;
+    background-size: 30px;
+    width: 30px;
+    height: 30px;
+    background: url("img/no-santa4.png") no-repeat;
+}
+
 
 .corn {
     position: absolute;

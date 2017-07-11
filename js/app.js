@@ -8,6 +8,7 @@ var game = (function() {
     var playerEl  = qs(".player", viewportEl);
     var scoreEls  = [].slice.call(qsa('.score',  viewportEl));
     var cornEls   = [].slice.call(qsa('.corn',   viewportEl));
+    var santaEls   = [].slice.call(qsa('.santa',   viewportEl));
 
     // Get element position:
     function getOffset(el) {
@@ -46,6 +47,19 @@ var game = (function() {
         solids: [].map.call(qsa('.solid',  viewportEl), getOffset),
 
         touchables: {
+            santa: {
+                positions: santaEls.map(getOffset),
+                onTouch: function(pos, i) {
+                    keys['left']=false;
+                    keys['up']=false;
+                    keys['down']=false;
+                    keys['right']=false;
+                    alert('SANTA=SATAN');
+                    this.touchables.santa.positions.splice(i, 1);
+                    santaEls[i].parentNode.removeChild(santaEls[i]);
+                    santaEls.splice(i, 1);
+                }
+            },
             corn: {
                 positions: cornEls.map(getOffset),
                 onTouch: function(pos, i) {
