@@ -66,7 +66,6 @@ Game.prototype.init = (function() {
 
         document.body.addEventListener('keydown', function(event) {
             // update player vector if an arrow key was pressed
-            console.log('keydown');
             if (Object.keys(keyCodeMap).some(function(keyCode) {
                 if (event.keyCode === +keyCode) {
                     var key = keyCodeMap[keyCode];
@@ -79,7 +78,6 @@ Game.prototype.init = (function() {
 
         document.body.addEventListener('keyup', function(e) {
             // update player vector if an arrow key was released
-            console.log('keyup');
             if (Object.keys(keyCodeMap).some(function(keyCode) {
                 if (event.keyCode === +keyCode) {
                     var key = keyCodeMap[keyCode];
@@ -94,12 +92,10 @@ Game.prototype.init = (function() {
         ['left','right','up','down'].forEach(function(elt) {
 
             document.getElementById(elt).addEventListener('mouseup', function() {
-                console.log('up');
                 keys[elt]=false;
                 updateVector();
             })
             document.getElementById(elt).addEventListener('mousedown', function() {
-                console.log('down');
                 keys[elt]=true;
                 updateVector();
             })
