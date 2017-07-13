@@ -83,26 +83,8 @@ body {
 
 
 
-body {
-    background-color: #aaa;
-    padding: 30px;
-    margin: 0px;
-}
 #snowflakeContainer {
-    position: absolute;
-    left: 0px;
-    top: 0px;
+    background-color: #aaa;
+    width: 80%;
 }
-.snowflake {
-    padding-left: 15px;
-    font-family: Cambria, Georgia, serif;
-    font-size: 14px;
-    line-height: 24px;
-    position: fixed;
-    color: #FFFFFF;
-    user-select: none;
-    z-index: 1000;
-}
-.snowflake:hover {
-    cursor: default;
-}
+
