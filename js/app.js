@@ -54,7 +54,7 @@ var game = (function() {
                     keys['up']=false;
                     keys['down']=false;
                     keys['right']=false;
-                    alert('SANTA=SATAN');
+                    alert('santa says NO!');
                     this.touchables.santa.positions.splice(i, 1);
                     santaEls[i].parentNode.removeChild(santaEls[i]);
                     santaEls.splice(i, 1);
