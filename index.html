@@ -13,101 +13,19 @@
 <h2 class="rainbowText">HOME OF THE PHONEY ISLAND PHONEYDAWG</h2>
 <hr />
 
+<br />
+<br />
+<br />
 
-<h1 style="color: red; font-size:80px; ">ANNOUNCEMENT: JULY 24TH</h1>
-
+<h1 class="awesome" style="color:purple; font-size:80px; ">AUGUST 10TH</h1>
 
 <div class="bands">
-    <span>DECIDE TODAY <a href="https://decidetoday.bandcamp.com/">CLICK HERE</a></span>
-    <span>THOM ELLIOT</span>
-    <span>KHRYSALIS</span>
+    <span>INSECT DELI</span>
+    <span>DENTAL WORK</span>
+    <span>STREET RAT (MEMBERS of PERIOD BOMB)</span>
+    <span>FEAST</span>
 </div>
-    <img width="50%" src="img/cydeflyer.jpg"></img>
-
-
-<div id="snowflakeContainer">
-    <canvas id="snowflakes" style="width:100%; height: 100%; float: center; z-index: -1;top:0px;left:0px"></canvas>
-    <h1 style="color:green; font-size:80px; ">ANNOUNCEMENT: JULY 30TH CHRISTMAS IN JULY!</h1>
-
-    <div class="bands">
-        <span>D MAGGS</span>
-        <span>WATABOU</span>
-        <span>THEE EMOTRON <a href=https://theemotron.bandcamp.com/>CLICK HERE</a></span>
-        <span>CROCHET CATPAUSE</span>
-    </div>
-
-    <img width="50%" src="img/SUNJULY30th.jpg"></img>
-</div>
-
-
-<script>
-var canvas = document.getElementById('snowflakes');
-var ctx = canvas.getContext("2d");
-
-var mp = 225; //max particles
-var particles = [];
-for (var i = 0; i < mp; i++) {
-    particles.push({
-        x: Math.random()*canvas.width, //x-coordinate
-        y: Math.random()*canvas.height, //y-coordinate
-        r: Math.random()*4+1, //radius
-        d: Math.random()*mp //density
-    });
-}
- 
-//Lets draw the flakes
-function draw() {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    ctx.fillStyle = "rgba(255, 255, 255, 0.8)";
-    ctx.beginPath();
-    for(var i = 0; i < mp; i++) {
-        var p = particles[i];
-        ctx.moveTo(p.x, p.y);
-        ctx.arc(p.x, p.y, p.r, 0, Math.PI*2, true);
-    }
-    ctx.fill();
-    update();
-}
-
-//Function to move the snowflakes
-//angle will be an ongoing incremental flag. Sin and Cos functions will be applied to it to create vertical and horizontal movements of the flakes
-var angle = 0;
-function update() {
-    angle += 0.01;
-    for(var i = 0; i < mp; i++) {
-        var p = particles[i];
-        //Updating X and Y coordinates
-        //We will add 1 to the cos function to prevent negative values which will lead flakes to move upwards
-        //Every particle has its own density which can be used to make the downward movement different for each flake
-        //Lets make it more random by adding in the radius
-        p.y += Math.cos(angle+p.d) + 1 + p.r/2;
-        p.x += Math.sin(angle) * 2;
-
-        //Sending flakes back from the top when it exits
-        //Lets make it a bit more organic and let flakes enter from the left and right also.
-        if(p.x > canvas.width+5 || p.x < -5 || p.y > canvas.height) {
-            if(i%3 > 0) {
-                particles[i] = {x: Math.random()*canvas.width, y: -10, r: p.r, d: p.d};
-            }
-            else if(Math.sin(angle) > 0) {
-                //Enter from the left
-                particles[i] = {x: -5, y: Math.random()*canvas.height, r: p.r, d: p.d};
-            } else {
-                //Enter from the right
-                particles[i] = {x: canvas.width+5, y: Math.random()*canvas.height, r: p.r, d: p.d};
-            }
-        }
-    }
-}
-
-//animation loop
-setInterval(draw, 70);
-</script>
-<br />
-<br />
-<br />
-
-
+<img width="50%" src="img/snotposter.jpg"></img>
 
 <br/>
 <br/>
@@ -160,11 +78,30 @@ setInterval(draw, 70);
 <br />
 <br />
 <br />
-<marquee scrollamount="20"><h1 class="rainbowText">PAST EVENTS</h1></marquee>
+<h1 class="rainbowText">PAST EVENTS</h1>
+
+
+
+
+<h1 style="color: red; font-size:80px; ">ANNOUNCEMENT: JULY 24TH</h1>
+
+
+<h2 style="color:red">JULY 30TH CHRISTMAS IN JULY!</h2>
+<h3>DECIDE TODAY <a href="https://decidetoday.bandcamp.com/">CLICK HERE</a>, THOM ELLIOT, KHRYSALIS</h3>
+<a href="img/cydeflyer.jpg"><img width="200px" src="img/cydeflyer.jpg"></img></a>
+
+
+<h2 style="color:green">JULY 30TH CHRISTMAS IN JULY!</h1>
+<h3>D MAGGS, WATABOU, THEE EMOTRON <a href=https://theemotron.bandcamp.com/>CLICK HERE</a>,CROCHET CATPAUSE</h3>
+
+<a href="img/SUNJULY20th.jpg"><img width="200px" src="img/SUNJULY30th.jpg"></img></a>
+
+
+
 <h2>JUNE 2ND 2017</h2>
 
 
-<h3>TUNIC (WINNIPEG) <a href="https://tunicband.bandcamp.com/">[]</a>, RED EYE RACCOON, THOM ELLIOT, TEENER</h3>
+<h3>TUNIC (WINNIPEG) <a href="https://tunicband.bandcamp.com/">[CLICK]</a>, RED EYE RACCOON, THOM ELLIOT, TEENER</h3>
 
 <a href="img/JUNE2.jpg"><img src="img/JUNE2.jpg" style="width:200px;"></img></a>
 <br />
@@ -172,15 +109,16 @@ setInterval(draw, 70);
 
 
 
-<h3>APRIL 18TH 2017 - SAKE MOM, THE STASIS, PERIOD BOMB, DENTAL WORK</h3>
+<h2>APRIL 18TH 2017</h2>
+<h3>SAKE MOM, THE STASIS, PERIOD BOMB, DENTAL WORK</h3>
 <a href="img/AprilBiggz3-small.jpg"><img src="img/AprilBiggz3-small.jpg" style="width:200px;"></img></a>
 
 <h3>SEPTEMBER 2016 - BATTTTS IN THE ATTIC</h3>
 <p>HUGE NEW BAT PRODUCT RELEASE COMING IN FUTURE FOR YOUR LIFE NECTER PREORDER NEW ORDER NOW!!!</p>
+<img src="https://americananimalcontrol.com/wp-content/uploads/2014/03/bat-removal-what-is-in-your-attic-989x1024.jpg" width="200px"></img>
 
 <h3>YEAR 0 AD - DOG WITH SUNGLASSES SAYS DEAL WITH IT</h3>
-<img src=dog.gif>
-</img>
+<img src="dog.gif" width="200px"></img>
 </center>
 
 <a href="chill.html">you want some chill dog on that</a>
