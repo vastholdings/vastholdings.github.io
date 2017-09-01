@@ -23,7 +23,6 @@ document.addEventListener("DOMContentLoaded", function() {
     var t = 0;
 
     gameboard.addEventListener("mousedown", function() {
-        console.log('fireballz');
         fireballs.push({ x:210, y:-20, t: 0});
     }, false);
 
@@ -58,7 +57,13 @@ document.addEventListener("DOMContentLoaded", function() {
             ctx.fillStyle = 'yellow';
             ctx.fillRect(f.x - f.x % 10 + 20, f.y, 10, 20);
             f.x++;
-            console.log(f.x,-10*Math.floor(t/1000))
+
+            if(f.x - clown < 5 && !flag) {
+                flag = true;
+                alert('clown: this dangerous fireball has ruined me, I did not know worms threw the fireballs, please do not harm me any further\n\n\n'+
+                    'worm: TELL ME WHERE THE SHOW IS\n\n\n'+
+                    'clown: 6420 e forest!');
+            }
         }
         ctx.restore();
         //ctx.translate(-10*Math.floor(t/1000),0);
@@ -101,6 +106,9 @@ document.addEventListener("DOMContentLoaded", function() {
         ctx.fillRect(20,20,10,10);
         ctx.fillRect(30,20,10,10);
         ctx.fillRect(10,20,10,10);
+        ctx.fillRect(10,30,10,10);
+        ctx.fillRect(20,30,10,10);
+        ctx.fillRect(30,30,10,10);
         //eyes
         ctx.strokeStyle='black';
         ctx.beginPath();
@@ -115,20 +123,20 @@ document.addEventListener("DOMContentLoaded", function() {
         ctx.lineTo(15,5);
         ctx.closePath();
         ctx.stroke();
+        ctx.fillStyle='red';
+        ctx.fillRect(0,20,10,10);
         clown--;
         
 
-        if(t/100>600 && !flag) {
-            flag = true;
-            alert('fight the clownzz, go to 6420 e forest');
-        }
 
         ctx.setTransform(1,0,0,1,0,0);
-        ctx.fillStyle = 'white';
-        ctx.font = '20px monospace';
-        ctx.fillText('PHONEY ISLAND **CLOWN FIGHT**', 20, 350);
-        ctx.fillStyle='black';
-        ctx.fillText('PHONEY ISLAND **CLOWN FIGHT**', 21, 351);
+        ctx.font = 'italic 30px monospace';
+        for(var i = 0; i < 8; i++) {
+            ctx.fillStyle = 'white';
+            ctx.fillText('PHONEY ISLAND CLOWN FIGHT', 20+2*i, 350+2*i);
+            ctx.fillStyle='black';
+            ctx.fillText('PHONEY ISLAND CLOWN FIGHT', 2+2*i+1, 350+2*i+1);
+        }
 
     }
     setInterval(function() {
