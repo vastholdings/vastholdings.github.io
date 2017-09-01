@@ -12,7 +12,8 @@ for(var i = 0; i < 10000; i++) {
 }
 
 var clown = 720;
-var currPos = 0;
+var t = 0;
+var s = 0;
 
 
 document.addEventListener("DOMContentLoaded", function() {
@@ -44,7 +45,7 @@ document.addEventListener("DOMContentLoaded", function() {
         ctx.fillStyle='black';
         ctx.translate(0,h*3/4-10);
         for(var i = 0; i < 20; i++) {
-            ctx.fillRect(i*10+currPos, -10*Math.floor(2*Math.sin(i*Math.PI/6+t/1000)), 10, -10);
+            ctx.fillRect(i*10, -10*Math.floor(2*Math.sin(i*Math.PI/6+t/1000)), 10, -10);
         }
 
         if(clown < 210 && !flag) {
@@ -136,16 +137,18 @@ document.addEventListener("DOMContentLoaded", function() {
 
         ctx.setTransform(1,0,0,1,0,0);
         ctx.font = 'italic 30px monospace';
+        var arr=['white','black'];
         for(var i = 0; i < 8; i++) {
-            ctx.fillStyle = 'white';
+            ctx.fillStyle = arr[(s+i)%2];
             ctx.fillText('PHONEY ISLAND CLOWN FIGHT', 100+2*i, 350+2*i);
-            ctx.fillStyle='black';
+            ctx.fillStyle = arr[(s+i+1)%2];
             ctx.fillText('PHONEY ISLAND CLOWN FIGHT', 100+2*i+1, 350+2*i+1);
         }
 
     }
     setInterval(function() {
         t+=100;
+        s++;
         drawGame();
     }, 70);
 });
