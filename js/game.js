@@ -4,6 +4,8 @@ var flag = false;
 var clouds = [];
 var cloudsy = [];
 
+var fireballs = [];
+
 for(var i = 0; i < 10000; i++) {
     clouds[i] = 150*i + 80*(Math.random()-0.5);
     cloudsy[i] = 20*Math.floor(10*Math.random());
@@ -19,9 +21,16 @@ document.addEventListener("DOMContentLoaded", function() {
     var h = gameboard.height;
     var t = 0;
 
+    gameboard.addEventListener("mousedown", function() {
+        console.log('fireballz');
+        fireballs.push({ x:210, y:-20, t: 0});
+    }, false);
+
 
     var drawGame = function() {
         ctx.setTransform(1,0,0,1,0,0);
+
+        ctx.save();
         ctx.fillStyle='lightblue';
         ctx.fillRect(0, 0, w, h*3/4);
         ctx.translate(0,h*3/4);
@@ -43,7 +52,23 @@ document.addEventListener("DOMContentLoaded", function() {
         ctx.fillRect(200, -10*Math.floor(2*Math.sin(21*Math.PI/6+t/1000))+10, 10, -10);
         ctx.fillRect(200, -10*Math.floor(2*Math.sin(21*Math.PI/6+t/1000)), 10, -10);
 
-        ctx.setTransform(1,0,0,1,0,0);
+
+
+
+
+        for(var i = 0; i < fireballs.length; i++) {
+            var f = fireballs[i];
+
+            ctx.fillStyle = 'red';
+            ctx.fillRect(f.x - f.x % 10, f.y, 10, 20);
+            ctx.fillStyle = 'orange';
+            ctx.fillRect(f.x - f.x % 10 + 10, f.y, 10, 20);
+            ctx.fillStyle = 'yellow';
+            ctx.fillRect(f.x - f.x % 10 + 20, f.y, 10, 20);
+            f.x++;
+            console.log(f.x)
+        }
+        ctx.restore();
         ctx.translate(-10*Math.floor(t/1000),0);
         ctx.fillStyle='white';
         for(var i = 0; i < clouds.length; i++) {
@@ -54,7 +79,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
 
 
-        ctx.fillStyle = 'red';
+        ctx.fillStyle='red';
         ctx.translate(clown,h*3/4-50);
         ctx.fillRect(0, 0, 10, 10);
         ctx.fillRect(10, 0, 10, 10);
@@ -94,6 +119,7 @@ document.addEventListener("DOMContentLoaded", function() {
         ctx.lineTo(15,5);
         ctx.closePath();
         ctx.stroke();
+        
 
         if(t/100>600 && !flag) {
             flag = true;
