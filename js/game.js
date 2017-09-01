@@ -3,6 +3,7 @@
 var flag = false;
 var clouds = [];
 var cloudsy = [];
+
 for(var i = 0; i < 10000; i++) {
     clouds[i] = 150*i + 80*(Math.random()-0.5);
     cloudsy[i] = 20*Math.floor(10*Math.random());
@@ -14,8 +15,8 @@ var clown = 800;
 document.addEventListener("DOMContentLoaded", function() {
     var gameboard = document.getElementById('gameboard');
     var ctx = gameboard.getContext('2d');
-    var w = gameboard.offsetWidth;
-    var h = gameboard.offsetHeight;
+    var w = gameboard.width;
+    var h = gameboard.height;
     var t = 0;
 
 
