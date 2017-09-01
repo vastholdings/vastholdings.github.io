@@ -32,15 +32,18 @@ document.addEventListener("DOMContentLoaded", function() {
 
         ctx.setTransform(1,0,0,1,0,0);
         ctx.fillStyle='black';
-        ctx.translate(0,h*3/4);
+        ctx.translate(0,h*3/4-10);
 
 
         for(var i = 0; i < 20; i++) {
-            ctx.fillRect(i*10, -2*Math.floor(10*Math.sin(i*Math.PI/6+t/1000)), 10, -10);
+            ctx.fillRect(i*10, -10*Math.floor(2*Math.sin(i*Math.PI/6+t/1000)), 10, -10);
         }
+        ctx.fillStyle='black';
+        ctx.fillRect(200, -10*Math.floor(2*Math.sin(21*Math.PI/6+t/1000))+10, 10, -10);
+        ctx.fillRect(200, -10*Math.floor(2*Math.sin(21*Math.PI/6+t/1000)), 10, -10);
 
         ctx.setTransform(1,0,0,1,0,0);
-        ctx.translate(-t/100,0);
+        ctx.translate(-10*Math.floor(t/1000),0);
         ctx.fillStyle='white';
         for(var i = 0; i < clouds.length; i++) {
             ctx.fillRect(clouds[i], cloudsy[i], 20, 20);
