@@ -50,7 +50,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
         if(clown < 210 && !flag) {
             flag = true;
-            alert('I just fucking killed u u dum worm. you go be crush now');
+            alert('clown: I just fucking killed u u dum worm. you go be crush now');
         }
 
 
@@ -63,12 +63,12 @@ document.addEventListener("DOMContentLoaded", function() {
             ctx.fillStyle = 'yellow';
             ctx.fillRect(f.x - f.x % 10 + 20, f.y, 10, 20);
             f.x++;
+console.log(f.x-clown)
 
-            if(f.x - clown < 5 && !flag) {
+            if(Math.abs(f.x - clown) < 5 && !flag) {
                 flag = true;
-                alert('clown: this dangerous fireball has ruined me, I did not know worms threw the fireballs, please do not harm me any further\n\n\n'+
-                    'worm: TELL ME WHERE THE SHOW IS\n\n\n'+
-                    'clown: 6420 e forest!');
+                alert('worm: HAHA U JUST GOT FIREBALLZD TELL ME WHERE THE SHOW IS\n\n\n'+
+                    'clown: owowow it is 6420 e forest!');
             }
         }
         ctx.restore();
@@ -138,11 +138,11 @@ document.addEventListener("DOMContentLoaded", function() {
         ctx.setTransform(1,0,0,1,0,0);
         ctx.font = 'italic 30px monospace';
         var arr=['white','black'];
-        for(var i = 0; i < 8; i++) {
+        for(var i = 0; i < 18; i++) {
             ctx.fillStyle = arr[(s+i)%2];
-            ctx.fillText('PHONEY ISLAND CLOWN FIGHT', 100+2*i, 350+2*i);
+            ctx.fillText('PHONEY ISLAND CLOWN FIGHT', 150+2*i, 350+2*i);
             ctx.fillStyle = arr[(s+i+1)%2];
-            ctx.fillText('PHONEY ISLAND CLOWN FIGHT', 100+2*i+1, 350+2*i+1);
+            ctx.fillText('PHONEY ISLAND CLOWN FIGHT', 150+2*i+1, 350+2*i+1);
         }
 
     }
