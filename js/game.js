@@ -1,14 +1,14 @@
 'use strict';
 
-
+var flag = false;
 var clouds = [];
 var cloudsy = [];
 for(var i = 0; i < 10000; i++) {
-    clouds[i] = 150*i + 100*(Math.random()-0.5);
-    cloudsy[i] = Math.random()*20;
+    clouds[i] = 150*i + 80*(Math.random()-0.5);
+    cloudsy[i] = 20*Math.floor(10*Math.random());
 }
 
-var clown = 1000;
+var clown = 800;
 
 
 document.addEventListener("DOMContentLoaded", function() {
@@ -46,7 +46,8 @@ document.addEventListener("DOMContentLoaded", function() {
         ctx.translate(-10*Math.floor(t/1000),0);
         ctx.fillStyle='white';
         for(var i = 0; i < clouds.length; i++) {
-            ctx.fillRect(clouds[i], cloudsy[i], 20, 20);
+            ctx.fillRect(clouds[i], cloudsy[i], 80, 20);
+            ctx.fillRect(clouds[i]+20, cloudsy[i]-20, 40, 20);
         }
 
 
@@ -79,11 +80,36 @@ document.addEventListener("DOMContentLoaded", function() {
         ctx.fillRect(20,20,10,10);
         ctx.fillRect(30,20,10,10);
         ctx.fillRect(10,20,10,10);
+        ctx.strokeStyle='black';
+        ctx.beginPath();
+        ctx.moveTo(10,5);
+        ctx.lineTo(15,15);
+        ctx.moveTo(10,15);
+        ctx.lineTo(15,5);
+        ctx.translate(20,0);
+        ctx.moveTo(10,5);
+        ctx.lineTo(15,15);
+        ctx.moveTo(10,15);
+        ctx.lineTo(15,5);
+        ctx.closePath();
+        ctx.stroke();
+
+        if(t/100>600 && !flag) {
+            flag = true;
+            alert('fight the clownzz, go to 6420 e forest');
+        }
+
+        ctx.setTransform(1,0,0,1,0,0);
+        ctx.fillStyle='white';
+        ctx.font = '20px monospace';
+        ctx.fillText('PHONEY ISLAND **CLOWN FIGHT**', 20, 350);
+        ctx.fillStyle='black';
+        ctx.fillText('PHONEY ISLAND **CLOWN FIGHT**', 21, 351);
 
     }
     setInterval(function() {
-        t+=70;
-        drawGame(70);
+        t+=100;
+        drawGame();
     }, 70);
 });
 
