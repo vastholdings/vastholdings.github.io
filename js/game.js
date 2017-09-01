@@ -47,7 +47,8 @@ document.addEventListener("DOMContentLoaded", function() {
             ctx.fillRect(i*10+currPos, -10*Math.floor(2*Math.sin(i*Math.PI/6+t/1000)), 10, -10);
         }
 
-        if(clown < 210) {
+        if(clown < 210 && !flag) {
+            flag = true;
             alert('I just fucking killed u u dum worm. you go be crush now');
         }
 
@@ -137,9 +138,9 @@ document.addEventListener("DOMContentLoaded", function() {
         ctx.font = 'italic 30px monospace';
         for(var i = 0; i < 8; i++) {
             ctx.fillStyle = 'white';
-            ctx.fillText('PHONEY ISLAND CLOWN FIGHT', 20+2*i, 350+2*i);
+            ctx.fillText('PHONEY ISLAND CLOWN FIGHT', 100+2*i, 350+2*i);
             ctx.fillStyle='black';
-            ctx.fillText('PHONEY ISLAND CLOWN FIGHT', 2+2*i+1, 350+2*i+1);
+            ctx.fillText('PHONEY ISLAND CLOWN FIGHT', 100+2*i+1, 350+2*i+1);
         }
 
     }
