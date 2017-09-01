@@ -47,6 +47,10 @@ document.addEventListener("DOMContentLoaded", function() {
             ctx.fillRect(i*10+currPos, -10*Math.floor(2*Math.sin(i*Math.PI/6+t/1000)), 10, -10);
         }
 
+        if(clown < 210) {
+            alert('I just fucking killed u u dum worm. you go be crush now');
+        }
+
 
         for(var i = 0; i < fireballs.length; i++) {
             var f = fireballs[i];
