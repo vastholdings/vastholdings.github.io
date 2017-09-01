@@ -11,7 +11,8 @@ for(var i = 0; i < 10000; i++) {
     cloudsy[i] = 20*Math.floor(10*Math.random());
 }
 
-var clown = 800;
+var clown = 720;
+var currPos = 0;
 
 
 document.addEventListener("DOMContentLoaded", function() {
@@ -43,22 +44,13 @@ document.addEventListener("DOMContentLoaded", function() {
         ctx.setTransform(1,0,0,1,0,0);
         ctx.fillStyle='black';
         ctx.translate(0,h*3/4-10);
-
-
         for(var i = 0; i < 20; i++) {
-            ctx.fillRect(i*10, -10*Math.floor(2*Math.sin(i*Math.PI/6+t/1000)), 10, -10);
+            ctx.fillRect(i*10+currPos, -10*Math.floor(2*Math.sin(i*Math.PI/6+t/1000)), 10, -10);
         }
-        ctx.fillStyle='black';
-        ctx.fillRect(200, -10*Math.floor(2*Math.sin(21*Math.PI/6+t/1000))+10, 10, -10);
-        ctx.fillRect(200, -10*Math.floor(2*Math.sin(21*Math.PI/6+t/1000)), 10, -10);
-
-
-
 
 
         for(var i = 0; i < fireballs.length; i++) {
             var f = fireballs[i];
-
             ctx.fillStyle = 'red';
             ctx.fillRect(f.x - f.x % 10, f.y, 10, 20);
             ctx.fillStyle = 'orange';
@@ -66,21 +58,23 @@ document.addEventListener("DOMContentLoaded", function() {
             ctx.fillStyle = 'yellow';
             ctx.fillRect(f.x - f.x % 10 + 20, f.y, 10, 20);
             f.x++;
-            console.log(f.x)
+            console.log(f.x,-10*Math.floor(t/1000))
         }
         ctx.restore();
-        ctx.translate(-10*Math.floor(t/1000),0);
+        //ctx.translate(-10*Math.floor(t/1000),0);
         ctx.fillStyle='white';
         for(var i = 0; i < clouds.length; i++) {
-            ctx.fillRect(clouds[i], cloudsy[i], 80, 20);
-            ctx.fillRect(clouds[i]+20, cloudsy[i]-20, 40, 20);
+            ctx.fillRect(clouds[i]-clouds[i]%10, cloudsy[i], 80, 20);
+            ctx.fillRect(clouds[i]-clouds[i]%10+20, cloudsy[i]-20, 40, 20);
+            clouds[i]--;
         }
 
 
+        ctx.setTransform(1,0,0,1,0,0);
 
-
+        //hat
         ctx.fillStyle='red';
-        ctx.translate(clown,h*3/4-50);
+        ctx.translate(clown-clown%10, h*3/4-50);
         ctx.fillRect(0, 0, 10, 10);
         ctx.fillRect(10, 0, 10, 10);
         ctx.fillRect(20, 0, 10, 10);
@@ -91,6 +85,7 @@ document.addEventListener("DOMContentLoaded", function() {
         ctx.fillRect(20, -10, 10, 10);
         ctx.fillRect(10, -10, 10, 10);
         ctx.fillRect(20, -20, 10, 10);
+        //face
         ctx.fillStyle='yellow';
         ctx.translate(0,10);
         ctx.fillRect(0,0,10,10);
@@ -106,6 +101,7 @@ document.addEventListener("DOMContentLoaded", function() {
         ctx.fillRect(20,20,10,10);
         ctx.fillRect(30,20,10,10);
         ctx.fillRect(10,20,10,10);
+        //eyes
         ctx.strokeStyle='black';
         ctx.beginPath();
         ctx.moveTo(10,5);
@@ -119,6 +115,7 @@ document.addEventListener("DOMContentLoaded", function() {
         ctx.lineTo(15,5);
         ctx.closePath();
         ctx.stroke();
+        clown--;
         
 
         if(t/100>600 && !flag) {
@@ -127,7 +124,7 @@ document.addEventListener("DOMContentLoaded", function() {
         }
 
         ctx.setTransform(1,0,0,1,0,0);
-        ctx.fillStyle='white';
+        ctx.fillStyle = 'white';
         ctx.font = '20px monospace';
         ctx.fillText('PHONEY ISLAND **CLOWN FIGHT**', 20, 350);
         ctx.fillStyle='black';
