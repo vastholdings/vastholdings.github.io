@@ -1,7 +1,8 @@
 'use strict';
 
 
-window.addEventListener("load", function () {
+
+document.addEventListener("DOMContentLoaded", function() {
     var elements = document.getElementsByClassName("rainbowText");
     for (var i = 0; i < elements.length; i++) {
         generateRainbowText(elements[i]);
