@@ -1,6 +1,7 @@
 'use strict';
 
-var flag = false;
+var flag_win = false;
+var flag_lose = false;
 var clouds = [];
 var cloudsy = [];
 
@@ -14,6 +15,11 @@ for(var i = 0; i < 10000; i++) {
 var clown = 720;
 var t = 0;
 var s = 0;
+
+var hitLocx=0;
+var hitLocy=0;
+var clownVelocity = 10;
+var hitRadius = 0;
 
 
 document.addEventListener("DOMContentLoaded", function() {
@@ -48,12 +54,25 @@ document.addEventListener("DOMContentLoaded", function() {
             ctx.fillRect(i*10, -10*Math.floor(2*Math.sin(i*Math.PI/6+t/1000)), 10, -10);
         }
 
-        if(clown < 210 && !flag) {
-            flag = true;
-            alert('clown: I just fucking killed u u dum worm. you go be crush now');
+        if(clown < 210 && !flag_lose) {
+            flag_lose = true;
+            clownVelocity = 0;
+        }
+        ctx.setTransform(1,0,0,1,0,0);
+        ctx.fillStyle='white';
+        for(var i = 0; i < clouds.length; i++) {
+            ctx.fillRect(clouds[i]-clouds[i]%10, cloudsy[i], 80, 20);
+            ctx.fillRect(clouds[i]-clouds[i]%10+20, cloudsy[i]-20, 40, 20);
+            clouds[i]--;
+        }
+        if(flag_lose) {
+            ctx.fillStyle = 'purple';
+            ctx.fillText('clown: haha I killed u u dum worm!!', 0, 200);
+            ctx.fillText('       you gon be crushd now', 0, 220);
         }
 
 
+        ctx.translate(0,h*3/4-10);
         for(var i = 0; i < fireballs.length; i++) {
             var f = fireballs[i];
             ctx.fillStyle = 'red';
@@ -62,26 +81,37 @@ document.addEventListener("DOMContentLoaded", function() {
             ctx.fillRect(f.x - f.x % 10 + 10, f.y, 10, 20);
             ctx.fillStyle = 'yellow';
             ctx.fillRect(f.x - f.x % 10 + 20, f.y, 10, 20);
-            f.x++;
-console.log(f.x-clown)
+            f.x+=10;
 
-            if(Math.abs(f.x - clown) < 5 && !flag) {
-                flag = true;
-                alert('worm: HAHA U JUST GOT FIREBALLZD TELL ME WHERE THE SHOW IS\n\n\n'+
-                    'clown: owowow it is 6420 e forest!');
+            if(Math.abs(f.x - clown) < 20 && !flag_win) {
+                flag_win = true;
+                hitLocx = f.x;
+                hitLocy = f.y;
+                clownVelocity = 0;
+               
+            }
+            if(flag_win) {
+                ctx.fillStyle = 'brown';
+                for(var i = 0; i <= 8; i++) {
+                    ctx.fillRect(hitLocx - hitLocx % 10 + hitRadius*Math.cos(Math.PI/8*i), hitLocy - hitRadius*Math.sin(Math.PI/8*i), 10, 10);
+                }
+                ctx.fillStyle = 'red';
+                for(var i = 0; i <= 8; i++) {
+                    ctx.fillRect(hitLocx - hitLocx % 10 + (hitRadius-10)*Math.cos(Math.PI/8*i), hitLocy - (hitRadius-10)*Math.sin(Math.PI/8*i), 10, 10);
+                }
+                hitRadius +=10;
+                ctx.fillStyle = 'red';
+                ctx.fillText('worm: HAHA U JUST GOT FIREBALLZD TELL ME', 0, -200);
+                ctx.fillText('      WHERE THE SHOW IS', 0, -180);
+                ctx.fillStyle = 'darkgreen';
+                ctx.fillText('clown: owowow it is at 6420 e forest!', 0, -100);
             }
         }
         ctx.restore();
         //ctx.translate(-10*Math.floor(t/1000),0);
-        ctx.fillStyle='white';
-        for(var i = 0; i < clouds.length; i++) {
-            ctx.fillRect(clouds[i]-clouds[i]%10, cloudsy[i], 80, 20);
-            ctx.fillRect(clouds[i]-clouds[i]%10+20, cloudsy[i]-20, 40, 20);
-            clouds[i]--;
-        }
+        
 
 
-        ctx.setTransform(1,0,0,1,0,0);
 
         //hat
         ctx.fillStyle='red';
@@ -131,7 +161,8 @@ console.log(f.x-clown)
         ctx.stroke();
         ctx.fillStyle='red';
         ctx.fillRect(0,20,10,10);
-        clown--;
+        clown-=clownVelocity;
+
         
 
 
@@ -152,6 +183,3 @@ console.log(f.x-clown)
         drawGame();
     }, 70);
 });
-
-function drawBoard() {
-}
