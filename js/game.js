@@ -20,13 +20,45 @@ var hitLocx=0;
 var hitLocy=0;
 var clownVelocity = 10;
 var hitRadius = 0;
+var w;
+var h;
+
+
+function drawBackground(ctx) {
+    ctx.fillStyle='lightblue';
+    ctx.fillRect(0, 0, w, h*3/4);
+    ctx.translate(0,h*3/4);
+    ctx.fillStyle='green';
+    ctx.fillRect(0, 0, w, 10);
+    ctx.translate(0, 10);
+    ctx.fillStyle='orange';
+    ctx.fillRect(0, 0, w, h/4);
+}
+
+function drawWorm(ctx, t) {
+    ctx.fillStyle='black';
+    ctx.translate(0, h*3/4 - 10);
+    for(var i = 0; i < 20; i++) {
+        ctx.fillRect(i*10, -10*Math.floor(2*Math.sin(i*Math.PI/6+t/1000)), 10, -10);
+    }
+}
+
+function drawClouds(ctx, t) {
+    ctx.fillStyle='white';
+    for(var i = 0; i < clouds.length; i++) {
+        var x = clouds[i]-t/100;
+        var x2 = x+20;
+        ctx.fillRect(x-x%10, cloudsy[i], 80, 20);
+        ctx.fillRect(x2-x2%10, cloudsy[i]-20, 40, 20);
+    }
+}
 
 
 document.addEventListener("DOMContentLoaded", function() {
     var gameboard = document.getElementById('gameboard');
     var ctx = gameboard.getContext('2d');
-    var w = gameboard.width;
-    var h = gameboard.height;
+    w = gameboard.width;
+    h = gameboard.height;
     var t = 0;
 
     gameboard.addEventListener("mousedown", function() {
@@ -38,33 +70,20 @@ document.addEventListener("DOMContentLoaded", function() {
         ctx.setTransform(1,0,0,1,0,0);
 
         ctx.save();
-        ctx.fillStyle='lightblue';
-        ctx.fillRect(0, 0, w, h*3/4);
-        ctx.translate(0,h*3/4);
-        ctx.fillStyle='green';
-        ctx.fillRect(0, 0, w, 10);
-        ctx.translate(0, 10);
-        ctx.fillStyle='orange';
-        ctx.fillRect(0, 0, w, h/4);
-
-        ctx.setTransform(1,0,0,1,0,0);
-        ctx.fillStyle='black';
-        ctx.translate(0,h*3/4-10);
-        for(var i = 0; i < 20; i++) {
-            ctx.fillRect(i*10, -10*Math.floor(2*Math.sin(i*Math.PI/6+t/1000)), 10, -10);
-        }
+        drawBackground(ctx);
+        ctx.restore();
+        ctx.save();
+        drawWorm(ctx, t);
+        ctx.restore();
 
         if(clown < 210 && !flag_lose) {
             flag_lose = true;
             clownVelocity = 0;
         }
-        ctx.setTransform(1,0,0,1,0,0);
-        ctx.fillStyle='white';
-        for(var i = 0; i < clouds.length; i++) {
-            ctx.fillRect(clouds[i]-clouds[i]%10, cloudsy[i], 80, 20);
-            ctx.fillRect(clouds[i]-clouds[i]%10+20, cloudsy[i]-20, 40, 20);
-            clouds[i]--;
-        }
+        ctx.save()
+        drawClouds(ctx, t);
+        ctx.restore();
+
         if(flag_lose) {
             ctx.fillStyle = 'purple';
             ctx.fillText('clown: haha I killed u u dum worm!!', 0, 200);
