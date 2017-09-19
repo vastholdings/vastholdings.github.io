@@ -14,14 +14,11 @@ for(var i = 0; i < 10000; i++) {
 
 var t = 0;
 var s = 0;
-
-var hitLocx=0;
-var hitLocy=0;
-var hitRadius = 0;
 var w;
 var h;
 var timestep = 70;
 var win_flag = false;
+var lose_flag = false;
 
 
 
@@ -73,7 +70,6 @@ function drawFireballs(ctx) {
 function drawClowns(ctx) {
     for(var i = 0; i < clowns.length; i++) {
         var c = clowns[i];
-        console.log(c)
         drawClown(ctx, c);
     }
 }
@@ -132,9 +128,8 @@ function drawClown(ctx, clown) {
     if(clown.hit) {
         drawExplosion(ctx, clown);
         win_flag = true;
-
-    } else {
-        clown.x -= timestep / 10;
+    } else if(!clown.done) {
+        clown.x -= timestep / 8;
     }
 }
 
@@ -147,6 +142,13 @@ function drawWinner(ctx) {
     ctx.fillText('clown: owowow it is at 6420 e forest!', 0, 200);
 }
 
+function drawLoser(ctx) {
+    ctx.font = 'italic 30px monospace';
+    ctx.fillStyle = 'purple';
+    ctx.fillText('clown: you have been crushded', 0, 100);
+    ctx.fillText('worm: wow i suck i better refresh and try again', 0, 200);
+}
+
 function drawTitle(ctx) {
     ctx.font = 'italic 30px monospace';
     var arr=['white','black'];
@@ -157,16 +159,20 @@ function drawTitle(ctx) {
 }
 
 function checkCollisions() {
-    for(var i = 0; i < fireballs.length; i++) {
-        var f = fireballs[i];
-        for(var j = 0; j < clowns.length; j++) {
-            var clown = clowns[j];
+    for(var j = 0; j < clowns.length; j++) {
+        var clown = clowns[j];
+        for(var i = 0; i < fireballs.length; i++) {
+            var f = fireballs[i];
             if(Math.abs(f.x - clown.x) < 20) {
                 clown.hit = true;
                 clown.hitX = f.x;
                 clown.hitY = f.x;
                 clown.hitR = 10;
             }
+        }
+        if(clown.x < 220) {
+            lose_flag = true;
+            clown.done = true;
         }
     }
 }
@@ -211,11 +217,12 @@ document.addEventListener("DOMContentLoaded", function() {
         
 
         checkCollisions();
-        if(win_flag) {
-            ctx.save();
-            drawWinner(ctx);
-            ctx.restore();
 
+        if(win_flag) {
+            drawWinner(ctx);
+        }
+        if(lose_flag) {
+            drawLoser(ctx);
         }
     }
     setInterval(function() {
