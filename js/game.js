@@ -21,6 +21,7 @@ var hitRadius = 0;
 var w;
 var h;
 var timestep = 70;
+var win_flag = false;
 
 
 
@@ -130,11 +131,21 @@ function drawClown(ctx, clown) {
     ctx.fillRect(0,20,10,10);
     if(clown.hit) {
         drawExplosion(ctx, clown);
+        win_flag = true;
+
     } else {
         clown.x -= timestep / 10;
     }
 }
 
+function drawWinner(ctx) {
+    ctx.font = 'italic 30px monospace';
+    ctx.fillStyle = 'red';
+    ctx.fillText('worm: HAHA U JUST GOT KILZZD', 0, 100);
+    ctx.fillText('      TELL ME WHERE THE SHOW IS', 0, 140);
+    ctx.fillStyle = 'darkgreen';
+    ctx.fillText('clown: owowow it is at 6420 e forest!', 0, 200);
+}
 
 function drawTitle(ctx) {
     ctx.font = 'italic 30px monospace';
@@ -200,6 +211,12 @@ document.addEventListener("DOMContentLoaded", function() {
         
 
         checkCollisions();
+        if(win_flag) {
+            ctx.save();
+            drawWinner(ctx);
+            ctx.restore();
+
+        }
     }
     setInterval(function() {
         t += 100;
