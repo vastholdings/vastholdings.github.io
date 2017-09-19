@@ -17,11 +17,12 @@ var s = 0;
 
 var hitLocx=0;
 var hitLocy=0;
-var clownVelocity = 10;
 var hitRadius = 0;
 var w;
 var h;
 var timestep = 70;
+
+
 
 
 function drawBackground(ctx) {
@@ -43,7 +44,7 @@ function drawWorm(ctx, t) {
     }
 }
 
-function drawClouds(ctx, t) {
+function drawClouds(ctx) {
     ctx.fillStyle='white';
     for(var i = 0; i < clouds.length; i++) {
         clouds[i] -= timestep/10;
@@ -69,10 +70,10 @@ function drawFireballs(ctx) {
 }
 
 function drawClown(ctx) {
-    ctx.translate(0,h*3/4-10);
+    ctx.translate(0,h*3/4-50);
     //hat
     ctx.fillStyle='red';
-    ctx.translate(clown-clown%10, h*3/4-50);
+    ctx.translate(clown-clown%10, 0);
     ctx.fillRect(0, 0, 10, 10);
     ctx.fillRect(10, 0, 10, 10);
     ctx.fillRect(20, 0, 10, 10);
@@ -119,10 +120,17 @@ function drawClown(ctx) {
     ctx.fillStyle='red';
     ctx.fillRect(0,20,10,10);
     clown-=timestep/10;
-
-
 }
-
+function drawTitle(ctx) {
+    ctx.font = 'italic 30px monospace';
+    var arr=['white','black'];
+    for(var i = 0; i < 18; i++) {
+        ctx.fillStyle = arr[(s+i)%2];
+        ctx.fillText('PHONEY ISLAND CLOWN FIGHT', 150+2*i, 350+2*i);
+        ctx.fillStyle = arr[(s+i+1)%2];
+        ctx.fillText('PHONEY ISLAND CLOWN FIGHT', 150+2*i+1, 350+2*i+1);
+    }
+}
 
 function checkCollisions() {
     for(var i = 0; i < fireballs.length; i++) {
@@ -131,7 +139,6 @@ function checkCollisions() {
             flag_win = true;
             hitLocx = f.x;
             hitLocy = f.y;
-            clownVelocity = 0;
         }
     }
 }
@@ -149,35 +156,12 @@ document.addEventListener("DOMContentLoaded", function() {
 
 
     var drawGame = function() {
-        ctx.setTransform(1,0,0,1,0,0);
-
-        ctx.save();
-        drawBackground(ctx);
-        ctx.restore();
-        ctx.save();
-        drawWorm(ctx, t);
-        ctx.restore();
-
-        if(clown < 210 && !flag_lose) {
-            flag_lose = true;
-            clownVelocity = 0;
-        }
-        ctx.save()
-        drawClouds(ctx, t);
-        ctx.restore();
-
-        if(flag_lose) {
-            ctx.fillStyle = 'purple';
-            ctx.fillText('clown: haha I killed u u dum worm!!', 0, 200);
-            ctx.fillText('       you gon be crushd now', 0, 220);
-        }
-        ctx.save();
-        drawFireballs(ctx);
-        ctx.restore();
-
-        ctx.save();
-        drawClown(ctx);
-        ctx.restore();
+        var draw = [drawBackground, drawWorm, drawClouds, drawFireballs, drawClown, drawTitle];
+        draw.forEach(function(elt) {
+            ctx.save();
+            elt(ctx, t);
+            ctx.restore();
+        })
 
         checkCollisions();
 
@@ -199,17 +183,6 @@ document.addEventListener("DOMContentLoaded", function() {
         }
 
         
-
-
-        ctx.setTransform(1,0,0,1,0,0);
-        ctx.font = 'italic 30px monospace';
-        var arr=['white','black'];
-        for(var i = 0; i < 18; i++) {
-            ctx.fillStyle = arr[(s+i)%2];
-            ctx.fillText('PHONEY ISLAND CLOWN FIGHT', 150+2*i, 350+2*i);
-            ctx.fillStyle = arr[(s+i+1)%2];
-            ctx.fillText('PHONEY ISLAND CLOWN FIGHT', 150+2*i+1, 350+2*i+1);
-        }
 
     }
     setInterval(function() {
