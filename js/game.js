@@ -128,7 +128,12 @@ function drawClown(ctx, clown) {
     ctx.stroke();
     ctx.fillStyle='red';
     ctx.fillRect(0,20,10,10);
-    clown.x -= timestep / 10;
+    if(clown.hit) {
+        drawExplosion(ctx, clown);
+    } else {
+        clown.x -= timestep / 10;
+    }
+
 }
 
 
@@ -148,9 +153,11 @@ function checkCollisions() {
         var f = fireballs[i];
         for(var j = 0; j < clowns.length; j++) {
             var clown = clowns[j];
-            if(Math.abs(f.x - clown) < 20) {
-                hitLocx = f.x;
-                hitLocy = f.y;
+            if(Math.abs(f.x - clown.x) < 20) {
+                clown.hit = true;
+                clown.hitX = f.x;
+                clown.hitY = f.x;
+                clown.hitR = 10;
             }
         }
     }
@@ -158,17 +165,18 @@ function checkCollisions() {
 
 
 
-function drawExplosion(ctx) {
-    ctx.translate(0, h*3/4-50);
+function drawExplosion(ctx, clown) {
     ctx.fillStyle = 'brown';
-    for(var i = 0; i <= 8; i++) {
-        ctx.fillRect(hitLocx - hitLocx % 10 + hitRadius*Math.cos(Math.PI/8*i), hitLocy - hitRadius*Math.sin(Math.PI/8*i), 10, 10);
+    for(var i = 0; i <= 16; i++) {
+        ctx.fillStyle = 'brown';
+        ctx.fillRect(clown.hitR * Math.cos(Math.PI/8*i), -clown.hitR * Math.sin(Math.PI/8*i), 10, 10);
+        ctx.fillStyle = 'red';
+        ctx.fillRect((clown.hitR+10) * Math.cos(Math.PI/8*i), -(clown.hitR+10) * Math.sin(Math.PI/8*i), 10, 10);
+        ctx.fillStyle = 'yellow';
+        ctx.fillRect((clown.hitR+20) * Math.cos(Math.PI/8*i), -(clown.hitR+20) * Math.sin(Math.PI/8*i), 10, 10);
     }
-    ctx.fillStyle = 'red';
-    for(var i = 0; i <= 8; i++) {
-        ctx.fillRect(hitLocx - hitLocx % 10 + (hitRadius-10)*Math.cos(Math.PI/8*i), hitLocy - (hitRadius-10)*Math.sin(Math.PI/8*i), 10, 10);
-    }
-    hitRadius +=10;
+    //} 
+    clown.hitR += timestep/10;
 }
 
 
