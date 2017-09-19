@@ -133,7 +133,6 @@ function drawClown(ctx, clown) {
     } else {
         clown.x -= timestep / 10;
     }
-
 }
 
 
@@ -143,8 +142,6 @@ function drawTitle(ctx) {
     for(var i = 0; i < 18; i++) {
         ctx.fillStyle = arr[(s+i)%2];
         ctx.fillText('PHONEY ISLAND CLOWN FIGHT', 150+2*i, 350+2*i);
-        ctx.fillStyle = arr[(s+i+1)%2];
-        ctx.fillText('PHONEY ISLAND CLOWN FIGHT', 150+2*i+1, 350+2*i+1);
     }
 }
 
