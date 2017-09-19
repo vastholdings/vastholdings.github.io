@@ -1,17 +1,17 @@
 'use strict';
 
-var flag_win = false;
-var flag_lose = false;
 var clouds = [];
-var cloudsy = [];
+var clowns = [{x:720, y:0}];
 var fireballs = [];
 
+
 for(var i = 0; i < 10000; i++) {
-    clouds[i] = 150*i + 80*(Math.random()-0.5);
-    cloudsy[i] = 20*Math.floor(10*Math.random());
+    clouds[i] = {
+        x: 150*i + 80*(Math.random()-0.5),
+        y: 20*Math.floor(10*Math.random())
+    };
 }
 
-var clown = 720;
 var t = 0;
 var s = 0;
 
@@ -47,11 +47,11 @@ function drawWorm(ctx, t) {
 function drawClouds(ctx) {
     ctx.fillStyle='white';
     for(var i = 0; i < clouds.length; i++) {
-        clouds[i] -= timestep/10;
-        var x = clouds[i];
-        var x2 = clouds[i]+20;
-        ctx.fillRect(x-x%10, cloudsy[i], 80, 20);
-        ctx.fillRect(x2-x2%10, cloudsy[i]-20, 40, 20);
+        clouds[i].x -= timestep/10;
+        var x = clouds[i].x;
+        var x2 = clouds[i].x+20;
+        ctx.fillRect(x-x%10, clouds[i].y, 80, 20);
+        ctx.fillRect(x2-x2%10, clouds[i].y-20, 40, 20);
     }
 }
 
@@ -69,11 +69,20 @@ function drawFireballs(ctx) {
     }
 }
 
-function drawClown(ctx) {
-    ctx.translate(0,h*3/4-50);
+function drawClowns(ctx) {
+    for(var i = 0; i < clowns.length; i++) {
+        var c = clowns[i];
+        console.log(c)
+        drawClown(ctx, c);
+    }
+}
+
+
+
+function drawClown(ctx, clown) {
+    ctx.translate(clown.x - clown.x % 10, h*3/4-50);
     //hat
     ctx.fillStyle='red';
-    ctx.translate(clown-clown%10, 0);
     ctx.fillRect(0, 0, 10, 10);
     ctx.fillRect(10, 0, 10, 10);
     ctx.fillRect(20, 0, 10, 10);
@@ -119,8 +128,10 @@ function drawClown(ctx) {
     ctx.stroke();
     ctx.fillStyle='red';
     ctx.fillRect(0,20,10,10);
-    clown-=timestep/10;
+    clown.x -= timestep / 10;
 }
+
+
 function drawTitle(ctx) {
     ctx.font = 'italic 30px monospace';
     var arr=['white','black'];
@@ -135,13 +146,31 @@ function drawTitle(ctx) {
 function checkCollisions() {
     for(var i = 0; i < fireballs.length; i++) {
         var f = fireballs[i];
-        if(Math.abs(f.x - clown) < 20 && !flag_win) {
-            flag_win = true;
-            hitLocx = f.x;
-            hitLocy = f.y;
+        for(var j = 0; j < clowns.length; j++) {
+            var clown = clowns[j];
+            if(Math.abs(f.x - clown) < 20) {
+                hitLocx = f.x;
+                hitLocy = f.y;
+            }
         }
     }
 }
+
+
+
+function drawExplosion(ctx) {
+    ctx.translate(0, h*3/4-50);
+    ctx.fillStyle = 'brown';
+    for(var i = 0; i <= 8; i++) {
+        ctx.fillRect(hitLocx - hitLocx % 10 + hitRadius*Math.cos(Math.PI/8*i), hitLocy - hitRadius*Math.sin(Math.PI/8*i), 10, 10);
+    }
+    ctx.fillStyle = 'red';
+    for(var i = 0; i <= 8; i++) {
+        ctx.fillRect(hitLocx - hitLocx % 10 + (hitRadius-10)*Math.cos(Math.PI/8*i), hitLocy - (hitRadius-10)*Math.sin(Math.PI/8*i), 10, 10);
+    }
+    hitRadius +=10;
+}
+
 
 document.addEventListener("DOMContentLoaded", function() {
     var gameboard = document.getElementById('gameboard');
@@ -156,37 +185,19 @@ document.addEventListener("DOMContentLoaded", function() {
 
 
     var drawGame = function() {
-        var draw = [drawBackground, drawWorm, drawClouds, drawFireballs, drawClown, drawTitle];
+        var draw = [drawBackground, drawWorm, drawClouds, drawFireballs, drawClowns, drawTitle];
         draw.forEach(function(elt) {
             ctx.save();
             elt(ctx, t);
             ctx.restore();
-        })
-
-        checkCollisions();
-
-        if(flag_win) {
-            ctx.fillStyle = 'brown';
-            for(var i = 0; i <= 8; i++) {
-                ctx.fillRect(hitLocx - hitLocx % 10 + hitRadius*Math.cos(Math.PI/8*i), hitLocy - hitRadius*Math.sin(Math.PI/8*i), 10, 10);
-            }
-            ctx.fillStyle = 'red';
-            for(var i = 0; i <= 8; i++) {
-                ctx.fillRect(hitLocx - hitLocx % 10 + (hitRadius-10)*Math.cos(Math.PI/8*i), hitLocy - (hitRadius-10)*Math.sin(Math.PI/8*i), 10, 10);
-            }
-            hitRadius +=10;
-            ctx.fillStyle = 'red';
-            ctx.fillText('worm: HAHA U JUST GOT FIREBALLZD TELL ME', 0, -200);
-            ctx.fillText('      WHERE THE SHOW IS', 0, -180);
-            ctx.fillStyle = 'darkgreen';
-            ctx.fillText('clown: owowow it is at 6420 e forest!', 0, -100);
-        }
+        });
 
         
 
+        checkCollisions();
     }
     setInterval(function() {
-        t+=100;
+        t += 100;
         s++;
         drawGame();
     }, timestep);
