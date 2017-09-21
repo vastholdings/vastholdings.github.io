@@ -148,9 +148,8 @@ function drawLoser(ctx) {
 
 function drawTitle(ctx) {
     ctx.font = 'italic 30px monospace';
-    var arr = ['white', 'black'];
     for (var i = 0; i < 18; i++) {
-        ctx.fillStyle = arr[(s + i) % 2];
+        ctx.fillStyle = '#'+Math.floor(Math.random()*16777215).toString(16);
         ctx.fillText('PHONEY ISLAND CLOWN FIGHT', 150 + 2 * i, 350 + 2 * i);
     }
 }
