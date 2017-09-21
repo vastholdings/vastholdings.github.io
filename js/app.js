@@ -1,11 +1,11 @@
 // Create a game:
-var game = (function() {
+var game = (function () {
     // Viewport element & style:
-    var viewportEl = qs(".game");
+    var viewportEl = qs('.game');
     var cs = getComputedStyle(viewportEl);
 
     // Grab necessary game elements:
-    var playerEl  = qs(".player", viewportEl);
+    var playerEl  = qs('.player', viewportEl);
     var scoreEls  = [].slice.call(qsa('.score',  viewportEl));
     var cornEls   = [].slice.call(qsa('.corn',   viewportEl));
     var santaEls   = [].slice.call(qsa('.santa',   viewportEl));
@@ -25,7 +25,7 @@ var game = (function() {
         score: 0,
         finished: false,
         viewport: {
-            width:  parseInt(cs.width,  10),
+            width: parseInt(cs.width,  10),
             height: parseInt(cs.height, 10)
         },
 
@@ -33,7 +33,7 @@ var game = (function() {
             player: {
                 // Player position and move function:
                 pos: getOffset(playerEl),
-                move: function(sidePositions) {
+                move: function (sidePositions) {
                     playerEl.style.left = sidePositions.left + 'px';
                     playerEl.style.top  = sidePositions.top + 'px';
                 },
@@ -49,11 +49,11 @@ var game = (function() {
         touchables: {
             santa: {
                 positions: santaEls.map(getOffset),
-                onTouch: function(pos, i) {
-                    keys['left']=false;
-                    keys['up']=false;
-                    keys['down']=false;
-                    keys['right']=false;
+                onTouch: function (pos, i) {
+                    keys.left = false;
+                    keys.up = false;
+                    keys.down = false;
+                    keys.right = false;
                     alert('santa says NO!');
                     this.touchables.santa.positions.splice(i, 1);
                     santaEls[i].parentNode.removeChild(santaEls[i]);
@@ -62,11 +62,11 @@ var game = (function() {
             },
             corn: {
                 positions: cornEls.map(getOffset),
-                onTouch: function(pos, i) {
-                    keys['left']=false;
-                    keys['up']=false;
-                    keys['down']=false;
-                    keys['right']=false;
+                onTouch: function (pos, i) {
+                    keys.left = false;
+                    keys.up = false;
+                    keys.down = false;
+                    keys.right = false;
                     alert('CORN MAN AWAKENED');
                     this.touchables.corn.positions.splice(i, 1);
                     cornEls[i].parentNode.removeChild(cornEls[i]);
@@ -74,23 +74,23 @@ var game = (function() {
                 }
             },
             finish: {
-                positions: [getOffset(qs(".finish", viewportEl))],
-                onTouch: function() {
+                positions: [getOffset(qs('.finish', viewportEl))],
+                onTouch: function () {
                     if (this.finished) {
                         return;
                     }
-                    alert('YOU MADE IT TO THE FINISH:::::: NOW GET TO THE SHOW\n\n6420 E FOREST AVE DETROITTTTTTTTTTT')
+                    alert('YOU MADE IT TO THE FINISH:::::: NOW GET TO THE SHOW\n\n6420 E FOREST AVE DETROITTTTTTTTTTT');
                     this.setScore('add', 250);
                     this.finished = true;
                 }
             }
         },
 
-        setScore: function(method, amount) {
+        setScore: function (method, amount) {
             if (method === 'add') this.score += amount;
             else this.score -= amount;
 
-            scoreEls.forEach(function(scoreEl) {
+            scoreEls.forEach(function (scoreEl) {
                 scoreEl.textContent = this.score;
             }, this);
         }

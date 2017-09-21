@@ -13,7 +13,7 @@ function move() {
     button.innerHTML = lolz[notset % lolz.length];
     if (notset == 0) {
         setTimeout(() => {
-        button.removeEventListener('mouseover', move);
+            button.removeEventListener('mouseover', move);
         }, 14000);
     }
     notset++;

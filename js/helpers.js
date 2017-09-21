@@ -17,7 +17,7 @@ function extend(source, destination) {
 }
 
 
-function createInterval(fn, delay, thisVal /*, argumentToPass1, argumentToPass2, etc. */) {
+function createInterval(fn, delay, thisVal /* , argumentToPass1, argumentToPass2, etc. */) {
     var argsToPass = Array.prototype.slice.call(arguments, 3),
         id,
         obj = {

@@ -1,5 +1,5 @@
 // Game constructor:
-var Game = function(options) {
+var Game = function (options) {
     // options will override the following defaults if set
     var offset = extend(options, extend({
         moveables: { player: {
@@ -17,7 +17,7 @@ var Game = function(options) {
     this.init();
 
     // Setup interval. Delay controlls frame rate:
-    this.frameRefresher = createInterval(function() {
+    this.frameRefresher = createInterval(function () {
         this.movTick();
     }, 1000 / this.fps, this);
 
@@ -31,7 +31,7 @@ var keys = {
     down: false
 };
 // Update player direction and speed on keypress
-Game.prototype.init = (function() {
+Game.prototype.init = (function () {
     // Which keys are pressed:
 
 
@@ -60,13 +60,13 @@ Game.prototype.init = (function() {
         }
     }
 
-    return function() {
+    return function () {
         var updateVector = updatePlayerVector.bind(this);
         this.keys = keys;
 
-        document.body.addEventListener('keydown', function(event) {
+        document.body.addEventListener('keydown', function (event) {
             // update player vector if an arrow key was pressed
-            if (Object.keys(keyCodeMap).some(function(keyCode) {
+            if (Object.keys(keyCodeMap).some(function (keyCode) {
                 if (event.keyCode === +keyCode) {
                     var key = keyCodeMap[keyCode];
                     if (keys[key] === true) return;
@@ -76,9 +76,9 @@ Game.prototype.init = (function() {
             })) updateVector();
         });
 
-        document.body.addEventListener('keyup', function(e) {
+        document.body.addEventListener('keyup', function (e) {
             // update player vector if an arrow key was released
-            if (Object.keys(keyCodeMap).some(function(keyCode) {
+            if (Object.keys(keyCodeMap).some(function (keyCode) {
                 if (event.keyCode === +keyCode) {
                     var key = keyCodeMap[keyCode];
                     if (keys[key] === false) return;
@@ -89,38 +89,37 @@ Game.prototype.init = (function() {
         });
 
 
-        ['left','right','up','down'].forEach(function(elt) {
-
-            document.getElementById(elt).addEventListener('mouseup', function() {
-                keys[elt]=false;
+        ['left', 'right', 'up', 'down'].forEach(function (elt) {
+            document.getElementById(elt).addEventListener('mouseup', function () {
+                keys[elt] = false;
                 updateVector();
-            })
-            document.getElementById(elt).addEventListener('mousedown', function() {
-                keys[elt]=true;
+            });
+            document.getElementById(elt).addEventListener('mousedown', function () {
+                keys[elt] = true;
                 updateVector();
-            })
+            });
 
 
-            document.getElementById(elt).addEventListener('touchcancel', function() {
-                keys[elt]=false;
+            document.getElementById(elt).addEventListener('touchcancel', function () {
+                keys[elt] = false;
                 updateVector();
-            })
+            });
 
-            document.getElementById(elt).addEventListener('touchend', function() {
-                keys[elt]=false;
+            document.getElementById(elt).addEventListener('touchend', function () {
+                keys[elt] = false;
                 updateVector();
-            })
+            });
 
-            document.getElementById(elt).addEventListener('touchstart', function() {
-                keys[elt]=true;
+            document.getElementById(elt).addEventListener('touchstart', function () {
+                keys[elt] = true;
                 updateVector();
-            })
+            });
         });
     };
 })();
 
 // Checks if an element is inside its viewport:
-Game.prototype.insideGameArea = function(offset) {
+Game.prototype.insideGameArea = function (offset) {
     return !(
         offset.left < 0 ||
         offset.top  < 0 ||
@@ -130,7 +129,7 @@ Game.prototype.insideGameArea = function(offset) {
 };
 
 // Checks if rectangle a overlaps rectangle b
-Game.prototype.overlaps = function(a, b) {
+Game.prototype.overlaps = function (a, b) {
     // no horizontal overlap
     if (a.left >= b.right || b.left >= a.right) return false;
 
@@ -141,7 +140,7 @@ Game.prototype.overlaps = function(a, b) {
 };
 
 // Checks if rectangle a touches rectangle b
-Game.prototype.touches = function(a, b) {
+Game.prototype.touches = function (a, b) {
     // has horizontal gap
     if (a.left > b.right || b.left > a.right) return false;
 
@@ -151,7 +150,7 @@ Game.prototype.touches = function(a, b) {
     return true;
 };
 
-Game.prototype.getNewPosition = function(moveable) {
+Game.prototype.getNewPosition = function (moveable) {
     if (!moveable.moving) return null;
 
     // get player speed in "pixels per frame" by dividing their speed in "pixels per second" by the game fps
@@ -191,7 +190,7 @@ Game.prototype.getNewPosition = function(moveable) {
             validStep = nextStep;
             stepped = true;
         } else {
-            Object.keys(nextStep).forEach(function(key) {
+            Object.keys(nextStep).forEach(function (key) {
                 nextStep[key] = Math.floor(nextStep[key]);
             });
             if (this.isValidPlayerPosition(nextStep)) {
@@ -205,12 +204,12 @@ Game.prototype.getNewPosition = function(moveable) {
     return stepped ? validStep : null;
 };
 
-Game.prototype.isValidPlayerPosition = function(sidePositions) {
+Game.prototype.isValidPlayerPosition = function (sidePositions) {
     // Ensure move is inside the game area:
     if (!this.insideGameArea(sidePositions)) return false;
 
     // Ensure we're not entering a solid:
-    if ([].some.call(this.solids, function(solidPos, i) {
+    if ([].some.call(this.solids, function (solidPos, i) {
         return this.overlaps(sidePositions, solidPos);
     }, this)) return false;
 
@@ -218,14 +217,14 @@ Game.prototype.isValidPlayerPosition = function(sidePositions) {
 };
 
 // Move one pixel for each direction and check if move is valid.
-Game.prototype.movTick = function() {
+Game.prototype.movTick = function () {
     // ensure player position changed
     var player = this.moveables.player;
     var newPos = this.getNewPosition(player);
     if (!newPos) return;
 
     // Touchable collisions:
-    Object.keys(this.touchables).forEach(function(name) {
+    Object.keys(this.touchables).forEach(function (name) {
         var touchable = this.touchables[name];
         var positions = touchable.positions;
         for (var i = 0; i < positions.length; i++) {
