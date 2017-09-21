@@ -11,7 +11,6 @@ for (let i = 0; i < 10000; i++) {
         y: 20 * Math.floor(10 * Math.random())
     };
 }
-var s = 0;
 var w;
 var h;
 var timestep = 70;
@@ -145,14 +144,14 @@ function drawLoser(ctx) {
 }
 
 var colors = [];
-for(let i = 0; i < 18; i++) {
+for (let i = 0; i < 18; i++) {
     colors[i] = '#' + Math.floor(Math.random() * 16777215).toString(16);
 }
 function drawTitle(ctx) {
     ctx.font = 'italic 30px monospace';
     for (let i = 0; i < 18; i++) {
         ctx.fillStyle = colors[i];
-        ctx.fillText('PHONEY ISLAND CLOWN FIGHT', 150 + 2 * i, 350 + 2 * i);
+        ctx.fillText('PHONEY ISLAND CLOWN FIGHT', 150 + 2.5 * i, 340 + 2.5 * i);
     }
     colors.shift();
     colors.push('#' + Math.floor(Math.random() * 16777215).toString(16));
@@ -201,7 +200,7 @@ document.addEventListener('DOMContentLoaded', function () {
     var t = 0;
 
     gameboard.addEventListener('mousedown', function () {
-        if(!loseFlag) {
+        if (!loseFlag) {
             fireballs.push({ x: 210, y: -20, t: 0});
         }
     }, false);
@@ -227,7 +226,6 @@ document.addEventListener('DOMContentLoaded', function () {
     };
     setInterval(function () {
         t += 100;
-        s++;
         drawGame();
     }, timestep);
 });
