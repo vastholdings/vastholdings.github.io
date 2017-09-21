@@ -11,7 +11,7 @@ function move() {
     button.style.left = Math.floor(Math.random() * (browserWidth - buttonWidth)) + 'px';
     button.style.top = Math.floor(Math.random() * (browserHeight - buttonHeight)) + 'px';
     button.innerHTML = lolz[notset % lolz.length];
-    if (notset == 0) {
+    if (notset === 0) {
         setTimeout(() => {
             button.removeEventListener('mouseover', move);
         }, 14000);

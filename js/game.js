@@ -5,20 +5,18 @@ var clowns = [{x: 720, y: 0}];
 var fireballs = [];
 
 
-for (var i = 0; i < 10000; i++) {
+for (let i = 0; i < 10000; i++) {
     clouds[i] = {
         x: 150 * i + 80 * (Math.random() - 0.5),
         y: 20 * Math.floor(10 * Math.random())
     };
 }
-
-var t = 0;
 var s = 0;
 var w;
 var h;
 var timestep = 70;
-var win_flag = false;
-var lose_flag = false;
+var winFlag = false;
+var loseFlag = false;
 
 
 function drawBackground(ctx) {
@@ -35,14 +33,14 @@ function drawBackground(ctx) {
 function drawWorm(ctx, t) {
     ctx.fillStyle = 'black';
     ctx.translate(0, h * 3 / 4 - 10);
-    for (var i = 0; i < 20; i++) {
+    for (let i = 0; i < 20; i++) {
         ctx.fillRect(i * 10, -10 * Math.floor(2 * Math.sin(i * Math.PI / 6 + t / 1000)), 10, -10);
     }
 }
 
 function drawClouds(ctx) {
     ctx.fillStyle = 'white';
-    for (var i = 0; i < clouds.length; i++) {
+    for (let i = 0; i < clouds.length; i++) {
         clouds[i].x -= timestep / 10;
         var x = clouds[i].x;
         var x2 = clouds[i].x + 20;
@@ -53,7 +51,7 @@ function drawClouds(ctx) {
 
 function drawFireballs(ctx) {
     ctx.translate(0, h * 3 / 4 - 10);
-    for (var i = 0; i < fireballs.length; i++) {
+    for (let i = 0; i < fireballs.length; i++) {
         var f = fireballs[i];
         ctx.fillStyle = 'red';
         ctx.fillRect(f.x - f.x % 10, f.y, 10, 20);
@@ -66,7 +64,7 @@ function drawFireballs(ctx) {
 }
 
 function drawClowns(ctx) {
-    for (var i = 0; i < clowns.length; i++) {
+    for (let i = 0; i < clowns.length; i++) {
         var c = clowns[i];
         drawClown(ctx, c);
     }
@@ -124,7 +122,7 @@ function drawClown(ctx, clown) {
     ctx.fillRect(0, 20, 10, 10);
     if (clown.hit) {
         drawExplosion(ctx, clown);
-        win_flag = true;
+        winFlag = true;
     } else if (!clown.done) {
         clown.x -= timestep / 8;
     }
@@ -146,18 +144,24 @@ function drawLoser(ctx) {
     ctx.fillText('worm: wow i suck i better refresh and try again', 0, 200);
 }
 
+var colors = [];
+for(let i = 0; i < 18; i++) {
+    colors[i] = '#' + Math.floor(Math.random() * 16777215).toString(16);
+}
 function drawTitle(ctx) {
     ctx.font = 'italic 30px monospace';
-    for (var i = 0; i < 18; i++) {
-        ctx.fillStyle = '#' + Math.floor(Math.random() * 16777215).toString(16);
+    for (let i = 0; i < 18; i++) {
+        ctx.fillStyle = colors[i];
         ctx.fillText('PHONEY ISLAND CLOWN FIGHT', 150 + 2 * i, 350 + 2 * i);
     }
+    colors.shift();
+    colors.push('#' + Math.floor(Math.random() * 16777215).toString(16));
 }
 
 function checkCollisions() {
     for (var j = 0; j < clowns.length; j++) {
         var clown = clowns[j];
-        for (var i = 0; i < fireballs.length; i++) {
+        for (let i = 0; i < fireballs.length; i++) {
             var f = fireballs[i];
             if (Math.abs(f.x - clown.x) < 20) {
                 clown.hit = true;
@@ -167,7 +171,7 @@ function checkCollisions() {
             }
         }
         if (clown.x < 220) {
-            lose_flag = true;
+            loseFlag = true;
             clown.done = true;
         }
     }
@@ -176,7 +180,7 @@ function checkCollisions() {
 
 function drawExplosion(ctx, clown) {
     ctx.fillStyle = 'brown';
-    for (var i = 0; i <= 16; i++) {
+    for (let i = 0; i <= 16; i++) {
         ctx.fillStyle = 'brown';
         ctx.fillRect(clown.hitR * Math.cos(Math.PI / 8 * i), -clown.hitR * Math.sin(Math.PI / 8 * i), 10, 10);
         ctx.fillStyle = 'red';
@@ -197,7 +201,9 @@ document.addEventListener('DOMContentLoaded', function () {
     var t = 0;
 
     gameboard.addEventListener('mousedown', function () {
-        fireballs.push({ x: 210, y: -20, t: 0});
+        if(!loseFlag) {
+            fireballs.push({ x: 210, y: -20, t: 0});
+        }
     }, false);
 
 
@@ -212,10 +218,10 @@ document.addEventListener('DOMContentLoaded', function () {
 
         checkCollisions();
 
-        if (win_flag) {
+        if (winFlag) {
             drawWinner(ctx);
         }
-        if (lose_flag) {
+        if (loseFlag) {
             drawLoser(ctx);
         }
     };

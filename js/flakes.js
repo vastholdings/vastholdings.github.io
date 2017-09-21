@@ -4,7 +4,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     var mp = 225; // max particles
     var particles = [];
-    for (var i = 0; i < mp; i++) {
+    for (let i = 0; i < mp; i++) {
         particles.push({
             x: Math.random() * canvas.width, // x-coordinate
             y: Math.random() * canvas.height, // y-coordinate
@@ -18,7 +18,7 @@ document.addEventListener('DOMContentLoaded', function () {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         ctx.fillStyle = 'rgba(255, 255, 255, 0.8)';
         ctx.beginPath();
-        for (var i = 0; i < mp; i++) {
+        for (let i = 0; i < mp; i++) {
             var p = particles[i];
             ctx.moveTo(p.x, p.y);
             ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2, true);
@@ -32,7 +32,7 @@ document.addEventListener('DOMContentLoaded', function () {
     var angle = 0;
     function update() {
         angle += 0.01;
-        for (var i = 0; i < mp; i++) {
+        for (let i = 0; i < mp; i++) {
             var p = particles[i];
             // Updating X and Y coordinates
             // We will add 1 to the cos function to prevent negative values which will lead flakes to move upwards
