@@ -13,7 +13,7 @@ function move() {
     button.innerHTML = lolz[notset % lolz.length];
     if (notset == 0) {
         setTimeout(() => {
-	    button.removeEventListener('mouseover', move);
+        button.removeEventListener('mouseover', move);
         }, 14000);
     }
     notset++;
@@ -22,12 +22,12 @@ function move() {
 if (typeof addEventListener !== 'undefined') {
     button.addEventListener('mouseover', move, false);
     button.addEventListener('click', () => {
-        alert('6420 E Forest Ave 48207\n\n\n\nbe there or be scared');
+        document.write('<h1 style="font-size:400px;">6420 E Forest Ave 48207 be there or be scared</h1>');
     });
 } else if (typeof attachEvent !== 'undefined') {
     button.attachEvent('onmouseover', move);
     button.attachEvent('onclick', () => {
-        alert('6420 E Forest Ave 48207 be there or be scared');
+        document.write('<h1 style="font-size:400px;">6420 E Forest Ave 48207 be there or be scared</h1>');
     });
 } else {
     button.onmousover = move;
