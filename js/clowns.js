@@ -1,7 +1,14 @@
 'use strict';
 
 var clouds = [];
-var clowns = [{x: 720, y: 0}];
+var clowns = [
+    {x: 720, y: 0},
+    {x: 1500, y: 0},
+    {x: 1700, y: 0},
+    {x: 1800, y: 0},
+    {x: 2000, y: 0}
+];
+var explosions = [];
 var fireballs = [];
 
 
@@ -65,65 +72,70 @@ function drawFireballs(ctx) {
 function drawClowns(ctx) {
     for (let i = 0; i < clowns.length; i++) {
         var c = clowns[i];
+        ctx.save();
         drawClown(ctx, c);
+        ctx.restore();
+    }
+}
+function drawExplosions(ctx) {
+    for (let i = 0; i < explosions.length; i++) {
+        ctx.save();
+        drawExplosion(ctx, explosions[i]);
+        ctx.restore();
     }
 }
 
-
 function drawClown(ctx, clown) {
-    ctx.translate(clown.x - clown.x % 10, h * 3 / 4 - 50);
-    // hat
-    ctx.fillStyle = 'red';
-    ctx.fillRect(0, 0, 10, 10);
-    ctx.fillRect(10, 0, 10, 10);
-    ctx.fillRect(20, 0, 10, 10);
-    ctx.fillRect(30, 0, 10, 10);
-    ctx.fillRect(30, 0, 10, 10);
-    ctx.fillRect(40, 0, 10, 10);
-    ctx.fillRect(30, -10, 10, 10);
-    ctx.fillRect(20, -10, 10, 10);
-    ctx.fillRect(10, -10, 10, 10);
-    ctx.fillRect(20, -20, 10, 10);
-    // face
-    ctx.fillStyle = 'yellow';
-    ctx.translate(0, 10);
-    ctx.fillRect(0, 0, 10, 10);
-    ctx.fillRect(10, 0, 10, 10);
-    ctx.fillRect(20, 0, 10, 10);
-    ctx.fillRect(30, 0, 10, 10);
-    ctx.fillRect(40, 0, 10, 10);
-    ctx.fillRect(20, 10, 10, 10);
-    ctx.fillRect(30, 10, 10, 10);
-    ctx.fillRect(10, 10, 10, 10);
-    ctx.fillRect(0, 10, 10, 10);
-    ctx.fillRect(40, 10, 10, 10);
-    ctx.fillRect(20, 20, 10, 10);
-    ctx.fillRect(30, 20, 10, 10);
-    ctx.fillRect(10, 20, 10, 10);
-    ctx.fillRect(10, 30, 10, 10);
-    ctx.fillRect(20, 30, 10, 10);
-    ctx.fillRect(30, 30, 10, 10);
-    // eyes
-    ctx.strokeStyle = 'black';
-    ctx.beginPath();
-    ctx.moveTo(10, 5);
-    ctx.lineTo(15, 15);
-    ctx.moveTo(10, 15);
-    ctx.lineTo(15, 5);
-    ctx.translate(20, 0);
-    ctx.moveTo(10, 5);
-    ctx.lineTo(15, 15);
-    ctx.moveTo(10, 15);
-    ctx.lineTo(15, 5);
-    ctx.closePath();
-    ctx.stroke();
-    ctx.fillStyle = 'red';
-    ctx.fillRect(0, 20, 10, 10);
-    if (clown.hit) {
-        drawExplosion(ctx, clown);
-        winFlag = true;
-    } else if (!clown.done) {
+    if (!clown.done) {
         clown.x -= timestep / 8;
+        ctx.translate(clown.x - clown.x % 10, h * 3 / 4 - 50);
+        // hat
+        ctx.fillStyle = 'red';
+        ctx.fillRect(0, 0, 10, 10);
+        ctx.fillRect(10, 0, 10, 10);
+        ctx.fillRect(20, 0, 10, 10);
+        ctx.fillRect(30, 0, 10, 10);
+        ctx.fillRect(30, 0, 10, 10);
+        ctx.fillRect(40, 0, 10, 10);
+        ctx.fillRect(30, -10, 10, 10);
+        ctx.fillRect(20, -10, 10, 10);
+        ctx.fillRect(10, -10, 10, 10);
+        ctx.fillRect(20, -20, 10, 10);
+        // face
+        ctx.fillStyle = 'yellow';
+        ctx.translate(0, 10);
+        ctx.fillRect(0, 0, 10, 10);
+        ctx.fillRect(10, 0, 10, 10);
+        ctx.fillRect(20, 0, 10, 10);
+        ctx.fillRect(30, 0, 10, 10);
+        ctx.fillRect(40, 0, 10, 10);
+        ctx.fillRect(20, 10, 10, 10);
+        ctx.fillRect(30, 10, 10, 10);
+        ctx.fillRect(10, 10, 10, 10);
+        ctx.fillRect(0, 10, 10, 10);
+        ctx.fillRect(40, 10, 10, 10);
+        ctx.fillRect(20, 20, 10, 10);
+        ctx.fillRect(30, 20, 10, 10);
+        ctx.fillRect(10, 20, 10, 10);
+        ctx.fillRect(10, 30, 10, 10);
+        ctx.fillRect(20, 30, 10, 10);
+        ctx.fillRect(30, 30, 10, 10);
+        // eyes
+        ctx.strokeStyle = 'black';
+        ctx.beginPath();
+        ctx.moveTo(10, 5);
+        ctx.lineTo(15, 15);
+        ctx.moveTo(10, 15);
+        ctx.lineTo(15, 5);
+        ctx.translate(20, 0);
+        ctx.moveTo(10, 5);
+        ctx.lineTo(15, 15);
+        ctx.moveTo(10, 15);
+        ctx.lineTo(15, 5);
+        ctx.closePath();
+        ctx.stroke();
+        ctx.fillStyle = 'red';
+        ctx.fillRect(0, 20, 10, 10);
     }
 }
 
@@ -158,15 +170,17 @@ function drawTitle(ctx) {
 }
 
 function checkCollisions() {
+    if(clowns.length==0) {
+        winFlag = true;
+    }
     for (var j = 0; j < clowns.length; j++) {
         var clown = clowns[j];
         for (let i = 0; i < fireballs.length; i++) {
             var f = fireballs[i];
             if (Math.abs(f.x - clown.x) < 20) {
-                clown.hit = true;
-                clown.hitX = f.x;
-                clown.hitY = f.x;
-                clown.hitR = 10;
+                fireballs.splice(i,1);
+                clowns.splice(j,1);
+                explosions.push({ x: f.x, y: f.y, r: 10 });
             }
         }
         if (clown.x < 220) {
@@ -177,18 +191,18 @@ function checkCollisions() {
 }
 
 
-function drawExplosion(ctx, clown) {
+function drawExplosion(ctx, explosion) {
+    ctx.translate(explosion.x - explosion.x % 10, h * 3 / 4 - 50);
     ctx.fillStyle = 'brown';
     for (let i = 0; i <= 16; i++) {
         ctx.fillStyle = 'brown';
-        ctx.fillRect(clown.hitR * Math.cos(Math.PI / 8 * i), -clown.hitR * Math.sin(Math.PI / 8 * i), 10, 10);
+        ctx.fillRect(explosion.r * Math.cos(Math.PI / 8 * i), -explosion.r * Math.sin(Math.PI / 8 * i), 10, 10);
         ctx.fillStyle = 'red';
-        ctx.fillRect((clown.hitR + 10) * Math.cos(Math.PI / 8 * i), -(clown.hitR + 10) * Math.sin(Math.PI / 8 * i), 10, 10);
+        ctx.fillRect((explosion.r + 10) * Math.cos(Math.PI / 8 * i), -(explosion.r + 10) * Math.sin(Math.PI / 8 * i), 10, 10);
         ctx.fillStyle = 'yellow';
-        ctx.fillRect((clown.hitR + 20) * Math.cos(Math.PI / 8 * i), -(clown.hitR + 20) * Math.sin(Math.PI / 8 * i), 10, 10);
+        ctx.fillRect((explosion.r + 20) * Math.cos(Math.PI / 8 * i), -(explosion.r + 20) * Math.sin(Math.PI / 8 * i), 10, 10);
     }
-    // } 
-    clown.hitR += timestep / 10;
+    explosion.r += timestep / 10;
 }
 
 
@@ -207,7 +221,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
     var drawGame = function () {
-        var draw = [drawBackground, drawWorm, drawClouds, drawFireballs, drawClowns, drawTitle];
+        var draw = [drawBackground, drawWorm, drawClouds, drawFireballs, drawClowns, drawExplosions, drawTitle];
         draw.forEach(function (elt) {
             ctx.save();
             elt(ctx, t);
