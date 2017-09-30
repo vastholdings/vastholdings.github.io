@@ -4,7 +4,7 @@ body {
 
 .bands span {
     display:block;
-    font-size:3em;
+    font-size: 40px;
 }
 
 
@@ -21,4 +21,8 @@ body {
 .post {
     margin-bottom: 20px;
     padding-bottom: 20px;
+}
+
+.post img {
+    width: 25%;
 }
