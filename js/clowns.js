@@ -11,7 +11,7 @@ var clowns = [
 ];
 var explosions = [];
 var fireballs = [];
-
+var gameStarted = false;
 
 for (let i = 0; i < 10000; i++) {
     clouds[i] = {
@@ -21,6 +21,8 @@ for (let i = 0; i < 10000; i++) {
 }
 var w;
 var h;
+var t;
+var g;
 var timestep = 70;
 var winFlag = false;
 var loseFlag = false;
@@ -169,7 +171,11 @@ function drawTitle(ctx) {
     colors.shift();
     colors.push('#' + Math.floor(Math.random() * 16777215).toString(16));
 }
-
+function drawStartScreen(ctx) {
+    ctx.font = 'italic 30px monospace';
+    ctx.fillStyle = 'green';
+    ctx.fillText('>CLICK TO START', 150, 200);
+}
 function checkCollisions() {
     if(clowns.length==0) {
         winFlag = true;
@@ -215,14 +221,23 @@ document.addEventListener('DOMContentLoaded', function () {
     var t = 0;
 
     gameboard.addEventListener('mousedown', function () {
-        if (!loseFlag) {
+        if (!gameStarted) {
+            gameStarted = true;
+        }
+        else if (!loseFlag) {
             fireballs.push({ x: 210, y: -20, t: 0});
         }
     }, false);
 
 
     var drawGame = function () {
-        var draw = [drawBackground, drawWorm, drawClouds, drawFireballs, drawClowns, drawExplosions, drawTitle];
+        var draw = [drawBackground, drawWorm, drawClouds, drawTitle];
+        if(gameStarted) {
+            draw = draw.concat([drawFireballs, drawClowns, drawExplosions]);
+        }
+        else {
+            draw.push(drawStartScreen);
+        }
         draw.forEach(function (elt) {
             ctx.save();
             elt(ctx, t);
@@ -240,7 +255,10 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     };
     setInterval(function () {
-        t += 100;
+        t += timestep;
+        if(gameStarted) {
+            g += timestep;
+        }
         drawGame();
     }, timestep);
 });
