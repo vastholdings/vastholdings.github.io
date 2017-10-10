@@ -21,8 +21,6 @@ for (let i = 0; i < 10000; i++) {
 }
 var w;
 var h;
-var t;
-var g;
 var timestep = 70;
 var winFlag = false;
 var loseFlag = false;
@@ -177,7 +175,7 @@ function drawStartScreen(ctx) {
     ctx.fillText('>CLICK TO START', 150, 200);
 }
 function checkCollisions() {
-    if(clowns.length==0) {
+    if (clowns.length === 0) {
         winFlag = true;
     }
     for (var j = 0; j < clowns.length; j++) {
@@ -185,8 +183,8 @@ function checkCollisions() {
         for (let i = 0; i < fireballs.length; i++) {
             var f = fireballs[i];
             if (Math.abs(f.x - clown.x) < 20) {
-                fireballs.splice(i,1);
-                clowns.splice(j,1);
+                fireballs.splice(i, 1);
+                clowns.splice(j, 1);
                 explosions.push({ x: f.x, y: f.y, r: 10 });
             }
         }
@@ -223,8 +221,7 @@ document.addEventListener('DOMContentLoaded', function () {
     gameboard.addEventListener('mousedown', function () {
         if (!gameStarted) {
             gameStarted = true;
-        }
-        else if (!loseFlag) {
+        } else if (!loseFlag) {
             fireballs.push({ x: 210, y: -20, t: 0});
         }
     }, false);
@@ -232,10 +229,9 @@ document.addEventListener('DOMContentLoaded', function () {
 
     var drawGame = function () {
         var draw = [drawBackground, drawWorm, drawClouds, drawTitle];
-        if(gameStarted) {
+        if (gameStarted) {
             draw = draw.concat([drawFireballs, drawClowns, drawExplosions]);
-        }
-        else {
+        } else {
             draw.push(drawStartScreen);
         }
         draw.forEach(function (elt) {
@@ -256,9 +252,6 @@ document.addEventListener('DOMContentLoaded', function () {
     };
     setInterval(function () {
         t += timestep;
-        if(gameStarted) {
-            g += timestep;
-        }
         drawGame();
     }, timestep);
 });
