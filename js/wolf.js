@@ -4,7 +4,9 @@ var w,h,timestep;
 var gameStarted = false;
 var colors = [];
 var img;
+var img2;
 var loaded;
+var loaded2;
 for (let i = 0; i < 18; i++) {
     colors[i] = '#' + Math.floor(Math.random() * 16777215).toString(16);
 }
@@ -24,24 +26,25 @@ function drawBackground(ctx) {
 		loaded = true;
 		img = new Image();   // Create new img element
 		img.addEventListener('load', function() {
-			ctx.drawImage(img,0,0,w,h);
 		}, false);
 		img.src = 'img/art.png'; // Set source path
 	}
 }
 function drawWolf(ctx) {
-    ctx.font = 'italic 30px monospace';
-    for (let i = 0; i < 18; i++) {
-        ctx.fillStyle = colors[i];
-        ctx.fillText('GATHERING OF THE WOLFS', 150 + 2.5 * i, 340 + 2.5 * i);
-    }
-    colors.shift();
-    colors.push('#' + Math.floor(Math.random() * 16777215).toString(16));
+    if(loaded2) {
+		ctx.drawImage(img2,150,150);
+	} else {
+		loaded2 = true;
+		img2 = new Image();   // Create new img element
+		img2.addEventListener('load', function() {
+		}, false);
+		img2.src = 'img/wolf.png'; // Set source path
+	}
 }
 function drawStartScreen(ctx) {
     ctx.font = 'italic 30px monospace';
-    ctx.fillStyle = 'green';
-    ctx.fillText('>CLICK TO START', 150, 200);
+    ctx.fillStyle = 'brown';
+    ctx.fillText('>CLICK TO START', 150, 50);
 }
 document.addEventListener('DOMContentLoaded', function () {
     var gameboard = document.getElementById('gameboard');
@@ -58,7 +61,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
     var drawGame = function () {
-        var draw = [drawWolf, drawTitle,drawBackground];
+        var draw = [drawBackground,drawTitle,drawWolf];
         if (gameStarted) {
             //draw = draw.concat([]);
         } else {
