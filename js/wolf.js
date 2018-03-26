@@ -5,13 +5,15 @@ var gameStarted = false;
 var colors = [];
 var img;
 var img2;
+var img3;
 var loaded;
 var loaded2;
+var loaded3;
 
 var currh=10;
 var currs=50;
 var currl=50;
-var clicks = 1;
+var clicks = 0;
 
 function newColor() {
     currh += (Math.random()-0.5)*100;
@@ -22,13 +24,13 @@ function newColor() {
     currl = Math.min(Math.max(currl,40),50);
     return 'hsl('+currh+','+currs+'%,'+currl+'%)';
 }
-for (let i = 0; i < 30; i++) {
+for (let i = 0; i < 50; i++) {
     var col = newColor();
     colors[i] = col;
 }
 function drawTitle(ctx) {
     ctx.font = 'italic 30px monospace';
-    for (let i = 0; i < 30-Math.random()*20; i++) {
+    for (let i = 0; i < 50-Math.random()*40; i++) {
         ctx.fillStyle = colors[i];
         ctx.fillText('GATHERING OF THE WOLVES', 150 + 1.5 * i, 340 + 1.5 * i);
     }
@@ -47,6 +49,20 @@ function drawBackground(ctx) {
 		img.src = 'img/art.png'; // Set source path
 	}
 }
+function drawFinish(ctx) {
+	if(loaded3) {
+		ctx.drawImage(img3,0,0,w,h);
+	} else {
+		loaded3 = true;
+		img3 = new Image();   // Create new img element
+		img3.addEventListener('load', function() {
+		}, false);
+		img3.src = 'img/howl.png'; // Set source path
+	}
+    ctx.font = 'italic 60px monospace';
+    ctx.fillStyle = 'yellow';
+    ctx.fillText('HEAD TO 6420 E FOREST',30,70);
+}
 function drawWolf(ctx) {
     if(loaded2) {
         ctx.drawImage(img2,150,150);
@@ -63,9 +79,12 @@ function drawWolf(ctx) {
 }
 function drawStartScreen(ctx) {
     ctx.font = 'italic 72px monospace';
+    ctx.fillStyle = 'green';
+    ctx.fillText('>KEEP CLICKING TO',26,68);
+    ctx.fillText('>GATHER THE WOLVES', 26, 148);
     ctx.fillStyle = 'brown';
-    ctx.fillText('>KEEP CLICKING TO',60,70);
-    ctx.fillText('>GATHER THE WOLVES', 60, 150);
+    ctx.fillText('>KEEP CLICKING TO',30,70);
+    ctx.fillText('>GATHER THE WOLVES', 30, 150);
 }
 document.addEventListener('DOMContentLoaded', function () {
     var gameboard = document.getElementById('gameboard');
@@ -86,7 +105,9 @@ document.addEventListener('DOMContentLoaded', function () {
     var drawGame = function () {
         var draw = [drawBackground,drawTitle,drawWolf];
         if (gameStarted) {
-            //draw = draw.concat([]);
+            if(clicks>10) {
+                draw.push(drawFinish);
+            }
         } else {
             draw.push(drawStartScreen);
         }
@@ -99,7 +120,6 @@ document.addEventListener('DOMContentLoaded', function () {
     };
     setInterval(function () {
         t += timestep;
-        clicks -= 0.03;
         drawGame();
     }, timestep);
 });
