@@ -17,7 +17,7 @@ function drawTitle(ctx) {
         ctx.fillText('GATHERING OF THE WOLVES', 150 + 2.5 * i, 340 + 2.5 * i);
     }
     colors.shift();
-    colors.push('#' + Math.floor(Math.random() * 16777215).toString(16));
+    colors.push('hsl('+(Math.random()*100)+',50%,'+((Math.random()*20)+40)+'%)');
 }
 function drawBackground(ctx) {
 	if(loaded) {
