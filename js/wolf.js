@@ -18,6 +18,8 @@ img3 = new Image();   // Create new img element
 img3.addEventListener('load', function() {
 }, false);
 img3.src = 'img/howl.png';
+var played = true;
+var audio = new Audio('mp3/howl.mp3');
 
 var currh=10;
 var currs=50;
@@ -55,6 +57,10 @@ function drawFinish(ctx) {
     ctx.font = 'italic 60px monospace';
     ctx.fillStyle = 'yellow';
     ctx.fillText('HEAD TO 6420 E FOREST',30,70);
+    if(played) {
+        played = false;
+        audio.play();
+    }
 }
 function drawWolf(ctx) {
     ctx.drawImage(img2,150,150);
