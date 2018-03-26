@@ -1,23 +1,40 @@
 'use strict';
 
-var w,h,timestep;
+var w,h,timestep=10;
 var gameStarted = false;
 var colors = [];
 var img;
 var img2;
 var loaded;
 var loaded2;
-for (let i = 0; i < 18; i++) {
-    colors[i] = '#' + Math.floor(Math.random() * 16777215).toString(16);
+
+var currh=10;
+var currs=50;
+var currl=50;
+var clicks = 1;
+
+function newColor() {
+    currh += (Math.random()-0.5)*100;
+    currs += (Math.random()-0.5)*10;
+    currl += (Math.random()-0.5)*10;
+    currh = Math.min(Math.max(currh,0),50);
+    currs = Math.min(Math.max(currs,50),80);
+    currl = Math.min(Math.max(currl,40),50);
+    return 'hsl('+currh+','+currs+'%,'+currl+'%)';
+}
+for (let i = 0; i < 30; i++) {
+    var col = newColor();
+    colors[i] = col;
 }
 function drawTitle(ctx) {
     ctx.font = 'italic 30px monospace';
-    for (let i = 0; i < 18; i++) {
+    for (let i = 0; i < 30-Math.random()*20; i++) {
         ctx.fillStyle = colors[i];
-        ctx.fillText('GATHERING OF THE WOLVES', 150 + 2.5 * i, 340 + 2.5 * i);
+        ctx.fillText('GATHERING OF THE WOLVES', 150 + 1.5 * i, 340 + 1.5 * i);
     }
     colors.shift();
-    colors.push('hsl('+(Math.random()*100)+',50%,'+((Math.random()*20)+40)+'%)');
+    var col = newColor();
+    colors.push(col);
 }
 function drawBackground(ctx) {
 	if(loaded) {
@@ -32,7 +49,10 @@ function drawBackground(ctx) {
 }
 function drawWolf(ctx) {
     if(loaded2) {
-		ctx.drawImage(img2,150,150);
+        ctx.drawImage(img2,150,150);
+        for(var i = 0; i < Math.floor(clicks); i++) {
+            ctx.drawImage(img2,Math.random()*(w+img2.width)-img2.width,Math.random()*(h+img2.height)-img2.height);
+        }
 	} else {
 		loaded2 = true;
 		img2 = new Image();   // Create new img element
@@ -42,9 +62,10 @@ function drawWolf(ctx) {
 	}
 }
 function drawStartScreen(ctx) {
-    ctx.font = 'italic 30px monospace';
+    ctx.font = 'italic 72px monospace';
     ctx.fillStyle = 'brown';
-    ctx.fillText('>CLICK TO START', 150, 50);
+    ctx.fillText('>KEEP CLICKING TO',60,70);
+    ctx.fillText('>GATHER THE WOLVES', 60, 150);
 }
 document.addEventListener('DOMContentLoaded', function () {
     var gameboard = document.getElementById('gameboard');
@@ -56,6 +77,8 @@ document.addEventListener('DOMContentLoaded', function () {
     gameboard.addEventListener('mousedown', function () {
         if (!gameStarted) {
             gameStarted = true;
+        } else {
+            clicks++;
         }
     }, false);
 
@@ -76,6 +99,7 @@ document.addEventListener('DOMContentLoaded', function () {
     };
     setInterval(function () {
         t += timestep;
+        clicks -= 0.03;
         drawGame();
     }, timestep);
 });
