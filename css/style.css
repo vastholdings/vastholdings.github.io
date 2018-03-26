@@ -26,3 +26,7 @@ body {
 .post img {
     width: 25%;
 }
+
+button {
+    touch-action: manipulation;
+}
