@@ -6,9 +6,18 @@ var colors = [];
 var img;
 var img2;
 var img3;
-var loaded;
-var loaded2;
-var loaded3;
+img = new Image();   // Create new img element
+img.addEventListener('load', function() {
+}, false);
+img.src = 'img/art.png'; // Set source path
+img2 = new Image();   // Create new img element
+img2.addEventListener('load', function() {
+}, false);
+img2.src = 'img/wolf.png';
+img3 = new Image();   // Create new img element
+img3.addEventListener('load', function() {
+}, false);
+img3.src = 'img/howl.png';
 
 var currh=10;
 var currs=50;
@@ -39,43 +48,19 @@ function drawTitle(ctx) {
     colors.push(col);
 }
 function drawBackground(ctx) {
-	if(loaded) {
-		ctx.drawImage(img,0,0,w,h);
-	} else {
-		loaded = true;
-		img = new Image();   // Create new img element
-		img.addEventListener('load', function() {
-		}, false);
-		img.src = 'img/art.png'; // Set source path
-	}
+    ctx.drawImage(img,0,0,w,h);
 }
 function drawFinish(ctx) {
-	if(loaded3) {
-		ctx.drawImage(img3,0,0,w,h);
-	} else {
-		loaded3 = true;
-		img3 = new Image();   // Create new img element
-		img3.addEventListener('load', function() {
-		}, false);
-		img3.src = 'img/howl.png'; // Set source path
-	}
+    ctx.drawImage(img3,0,0,w,h);
     ctx.font = 'italic 60px monospace';
     ctx.fillStyle = 'yellow';
     ctx.fillText('HEAD TO 6420 E FOREST',30,70);
 }
 function drawWolf(ctx) {
-    if(loaded2) {
-        ctx.drawImage(img2,150,150);
-        for(var i = 0; i < Math.floor(clicks); i++) {
-            ctx.drawImage(img2,Math.random()*(w+img2.width)-img2.width,Math.random()*(h+img2.height)-img2.height);
-        }
-	} else {
-		loaded2 = true;
-		img2 = new Image();   // Create new img element
-		img2.addEventListener('load', function() {
-		}, false);
-		img2.src = 'img/wolf.png'; // Set source path
-	}
+    ctx.drawImage(img2,150,150);
+    for(var i = 0; i < Math.floor(clicks); i++) {
+        ctx.drawImage(img2,Math.random()*(w+img2.width)-img2.width,Math.random()*(h+img2.height)-img2.height);
+    }
 }
 function drawStartScreen(ctx) {
     ctx.font = 'italic 72px monospace';
