@@ -14,7 +14,7 @@ function drawTitle(ctx) {
     ctx.font = 'italic 30px monospace';
     for (let i = 0; i < 18; i++) {
         ctx.fillStyle = colors[i];
-        ctx.fillText('GATHERING OF THE WOLFS', 150 + 2.5 * i, 340 + 2.5 * i);
+        ctx.fillText('GATHERING OF THE WOLVES', 150 + 2.5 * i, 340 + 2.5 * i);
     }
     colors.shift();
     colors.push('#' + Math.floor(Math.random() * 16777215).toString(16));
