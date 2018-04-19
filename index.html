@@ -150,7 +150,20 @@
 <li><a href="button.html">The dodgy button</a></li>
 <li><a href="chill.html">You want some chill dog on that</a></li>
 </ul>
+<script>
+function preventZoom(e) {
+  var t2 = e.timeStamp;
+  var t1 = e.currentTarget.dataset.lastTouch || t2;
+  var dt = t2 - t1;
+  var fingers = e.touches.length;
+  e.currentTarget.dataset.lastTouch = t2;
 
+  if (!dt || dt > 500 || fingers > 1) return; // not double-tap
+
+  e.preventDefault();
+  e.target.click();
+}
+</script>
 <script src="js/flakes.js"></script>
 <script src="js/wolf.js"></script>
 <script src="js/rainbow_text.js"></script>
