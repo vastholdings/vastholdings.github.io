@@ -30,3 +30,7 @@ body {
 button {
     touch-action: manipulation;
 }
+
+#gameboard {
+    touch-action: none;
+}
