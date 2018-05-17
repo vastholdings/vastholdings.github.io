@@ -34,3 +34,7 @@ button {
 #gameboard {
     touch-action: none;
 }
+
+.container {
+    display:flex;
+}
