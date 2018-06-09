@@ -103,40 +103,42 @@ async function setup(){
 
 
 function myRenderTileSetup() {
-    ctx.save();
-    ctx.translate(offsetX, offsetY);
-    ctx.clearRect(0, 0, can.width, can.height);
-    var renderedCount = 0;
-    for(let y = 0; y < arrayWidth; y++){
-        for(let x = 0; x < arrayHeight; x++){
-            pos = x + y * arrayWidth;
-            if(imageArray[pos] && imageArray[pos].complete){
-                ctx.drawImage(imageArray[pos],(pos%arrayWidth)*imageWidth, Math.floor(pos/arrayWidth)*imageHeight);
-                //imageArray[pos] = undefined;
-            } else {
-                renderedCount += 1;
+    if(gameStarted) {
+        ctx.save();
+        ctx.translate(offsetX, offsetY);
+        ctx.clearRect(0, 0, can.width, can.height);
+        var renderedCount = 0;
+        for(let y = 0; y < arrayWidth; y++){
+            for(let x = 0; x < arrayHeight; x++){
+                pos = x + y * arrayWidth;
+                if(imageArray[pos] && imageArray[pos].complete){
+                    ctx.drawImage(imageArray[pos],(pos%arrayWidth)*imageWidth, Math.floor(pos/arrayWidth)*imageHeight);
+                    //imageArray[pos] = undefined;
+                } else {
+                    renderedCount += 1;
+                }
             }
         }
+        ctx.restore();
     }
     whatKey();
     draw();
-    ctx.restore();
     window.requestAnimationFrame(myRenderTileSetup);
 }
 function whatKey(e) {
-    if(keys[37]) {
+    if(keys[37]||keys['left']) {
 	offsetX = Math.min(0, offsetX + 5);
         frame = (frame+1)%2;
     }
-    if(keys[39]) {
+    if(keys[39]||keys['right']) {
 	offsetX = Math.max(-imageWidth*arrayWidth, offsetX - 5);
         frame = (frame+1)%2;
     }
-    if(keys[40]) {
+    if(keys[40]||keys['down']) {
 	offsetY = Math.max(-imageHeight*arrayHeight, offsetY - 5);
         frame = (frame+1)%2;
     }
-    if(keys[38]) {
+    if(keys[38]||keys['up']) {
 	offsetY = Math.min(0, offsetY + 5);
         frame = (frame+1)%2;
     }
@@ -144,6 +146,30 @@ function whatKey(e) {
         gameStarted = true;
     }
 }
+['left', 'right', 'up', 'down'].forEach(function (elt) {
+    console.log(elt);
+    document.getElementById(elt).addEventListener('mouseup', function () {
+        keys[elt] = false;
+    });
+    document.getElementById(elt).addEventListener('mousedown', function () {
+        keys[elt] = true;
+    });
 
 
+    document.getElementById(elt).addEventListener('touchcancel', function () {
+        keys[elt] = false;
+    });
+
+    document.getElementById(elt).addEventListener('touchend', function () {
+        keys[elt] = false;
+    });
+
+    document.getElementById(elt).addEventListener('touchstart', function () {
+        keys[elt] = true;
+    });
+});
 setup();
+
+document.getElementById('start').addEventListener('click', function() {
+    gameStarted=true;
+});
