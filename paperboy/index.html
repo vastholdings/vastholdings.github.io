@@ -90,36 +90,38 @@ function pad(n, width, z) {
 
 
 let arrayWidth = 5;
-function load() {
+let tilesWidth = 2000;
+let tilesHeight = 1600;
+
+function setup(){
     let imageArray = [];
     for(var i = 0; i < 24; i++) {
         var imageObj = new Image();
 	console.log('here',i);
         imageObj.onload = (function(pos) {
 	    return function() {
+                imageArray[pos] = this;
 		console.log(pos,pos%arrayWidth,(pos%arrayWidth)*this.width,Math.floor(pos/arrayWidth)*this.height);
-	        ctx.drawImage(this, this.width*(pos%arrayWidth), Math.floor(pos/arrayWidth)*this.height);
+	        //ctx.drawImage(this, this.width*(pos%arrayWidth), Math.floor(pos/arrayWidth)*this.height);
 	    }
         })(i);
         imageObj.src = `tiles/tile${pad(i,3)}.png`;
     }
-}
-load();
-
-function setup(){
     // populate your imageArray with the image tiles
 
     // Now call requestAmimationFrame
     window.requestAnimationFrame(myRenderTileSetup);
 }
+
+
 function myRenderTileSetup(){ // this renders the tiles as they are avalible
     var renderedCount = 0;
-    for(y = 0; y < tilesHeight; y+=1 ){
-        for(x = 0; x < tilesWidth; x+=1 ){
+    for(let y = 0; y < tilesHeight; y+=1 ){
+        for(let x = 0; x < tilesWidth; x+=1 ){
             arrayIndex = x+y*tilesWidth;
             // check if the image is available and loaded.
             if(imageArray[arrayIndex] && imageArray[arrayIndex].complete){
-                 //backGroundCTX.drawImage(imageArray[arrayIndex],... // draw the image
+                 backGroundCTX.drawImage(imageArray[arrayIndex],(arrayIndex%pos)*imageWidth, Math.floor(pos/arrayWidth)*imageHeight);
                  imageArray[arrayIndex] = undefined; // we dont need the image
                                                      // so unreference it
             }else{  // the image is not there so must have been rendered
@@ -132,7 +134,7 @@ function myRenderTileSetup(){ // this renders the tiles as they are avalible
           // background completely rendered
           // switch rendering to the main game render.
           window.requestAnimationFrame(myRenderMain);
-     }else{
+     } else{
           // if not all available keep doing this till all tiles complete/ 
           window.requestAnimationFrame(myRenderTileSetup);
      }
@@ -144,6 +146,8 @@ function myRenderMain(){
     // now ready for next frame.
     window.requestAnimationFrame(myRenderMain);
 }
+
+setup();
 </script>
 
 </body>
