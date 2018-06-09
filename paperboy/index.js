@@ -69,14 +69,14 @@ function pad(n, width, z) {
 
 
 let arrayWidth = 5;
-let arrayHeight = 4;
+let arrayHeight = 5;
 let imageWidth = 2000;
 let imageHeight = 1600;
 let imageArray = [];
 
 async function setup(){
     let imagesLoading = [];
-    for(var i = 0; i < 24; i++) {
+    for(var i = 0; i < 25; i++) {
         var imageObj = new Image();
         imagesLoading[i] = new Promise((resolve, error) => {
             imageObj.onload = function(pos) {
@@ -114,16 +114,16 @@ function myRenderTileSetup() {
 }
 function whatKey(e) {
     if(keys[37]) {
-	offsetX+=5;
+	offsetX = Math.min(0, offsetX + 5);
     }
     if(keys[39]) {
-	offsetX-=5;
+	offsetX = Math.max(-imageWidth*arrayWidth, offsetX - 5);
     }
     if(keys[40]) {
-	offsetY -= 5;
+	offsetY = Math.max(-imageHeight*arrayHeight, offsetY - 5);
     }
     if(keys[38]) {
-	offsetY += 5;
+	offsetY = Math.min(0, offsetY + 5);
     }
 }
 
