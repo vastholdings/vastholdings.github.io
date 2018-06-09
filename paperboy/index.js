@@ -18,36 +18,18 @@ var thingsOnMap = [
 ];
 
 // player's position
-var playerX = 20;
-var playerY = 20;
+var playerX = 100;
+var playerY = 100;
 
 // how far offset the canvas is
 var offsetX = 0;
 var offsetY = 0;
 let keys = [];
+let frame = 0;
+
     
 function draw() {
-    
-    // clear the viewport
-    
-    // draw the player
-    ctx.fillStyle = 'red';
-    ctx.fillRect(playerX - offsetX, playerY - offsetY, 8, 8);
-    
-    // draw the other stuff
-    var l = thingsOnMap.length;
-    for (var i = 0; i < l; i++) {
-        // we should really only draw the things that intersect the viewport!
-        // but I am lazy so we are drawing everything here
-        var x = thingsOnMap[i][0];
-        var y = thingsOnMap[i][1];
-        ctx.fillStyle = 'lightblue';
-        ctx.fillRect(x, y, 8, 8);
-        ctx.fillStyle = 'black';
-        ctx.fillText(x + ', ' + y, x, y) // just to show where we are drawing these things
-    }
-    
-    ctx.restore();
+    ctx.drawImage(bird[frame], playerX - offsetX, playerY - offsetY, 100, 100);
 }
 
 
@@ -73,20 +55,33 @@ let arrayHeight = 5;
 let imageWidth = 2000;
 let imageHeight = 1600;
 let imageArray = [];
+let bird = [];
 
 async function setup(){
     let imagesLoading = [];
-    for(var i = 0; i < 25; i++) {
+    let images = [];
+    for(let i = 0; i < 25; i++) {
+        images[i] = `tiles/tile${pad(i,3)}.png`;
+    }
+    images.push(`img/bird0.png`);
+    images.push(`img/bird1.png`);
+
+    for(var i = 0; i < images.length; i++) {
         var imageObj = new Image();
         imagesLoading[i] = new Promise((resolve, error) => {
             imageObj.onload = function(pos) {
                 resolve(this);
             }
-            imageObj.src = `tiles/tile${pad(i,3)}.png`;
+            imageObj.src = images[i];
         });
     }
+
+
     console.log('images loading');
     imageArray = await Promise.all(imagesLoading);
+    bird[0] = imageArray[25];
+    bird[1] = imageArray[26];
+    console.log(bird);
     console.log('done loading');
     window.requestAnimationFrame(myRenderTileSetup);
 }
@@ -102,7 +97,7 @@ function myRenderTileSetup() {
             pos = x + y * arrayWidth;
             if(imageArray[pos] && imageArray[pos].complete){
                 ctx.drawImage(imageArray[pos],(pos%arrayWidth)*imageWidth, Math.floor(pos/arrayWidth)*imageHeight);
-//                imageArray[pos] = undefined;
+                //imageArray[pos] = undefined;
             } else {
                 renderedCount += 1;
             }
@@ -110,20 +105,25 @@ function myRenderTileSetup() {
     }
     whatKey();
     draw();
+    ctx.restore();
     window.requestAnimationFrame(myRenderTileSetup);
 }
 function whatKey(e) {
     if(keys[37]) {
 	offsetX = Math.min(0, offsetX + 5);
+        frame = (frame+1)%2;
     }
     if(keys[39]) {
 	offsetX = Math.max(-imageWidth*arrayWidth, offsetX - 5);
+        frame = (frame+1)%2;
     }
     if(keys[40]) {
 	offsetY = Math.max(-imageHeight*arrayHeight, offsetY - 5);
+        frame = (frame+1)%2;
     }
     if(keys[38]) {
 	offsetY = Math.min(0, offsetY + 5);
+        frame = (frame+1)%2;
     }
 }
 
