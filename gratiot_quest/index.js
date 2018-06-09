@@ -26,9 +26,29 @@ var offsetX = 0;
 var offsetY = 0;
 let keys = [];
 let frame = 0;
+let arrayWidth = 5;
+let arrayHeight = 5;
+let imageWidth = 2000;
+let imageHeight = 1600;
+let imageArray = [];
+let bird = [];
+let gratiot;
+let gameStarted;
+let timer;
 
     
 function draw() {
+    if(!gameStarted) {
+        ctx.drawImage(gratiot, 0, 0, 800, 600);
+        if(!timer) {
+            timer = setInterval(function() {
+                frame = (frame + 1) % 2;
+            }, 400);
+        }
+    }
+    else {
+        clearInterval(timer);
+    }
     ctx.drawImage(bird[frame], playerX - offsetX, playerY - offsetY, 100, 100);
 }
 
@@ -50,12 +70,6 @@ function pad(n, width, z) {
 }
 
 
-let arrayWidth = 5;
-let arrayHeight = 5;
-let imageWidth = 2000;
-let imageHeight = 1600;
-let imageArray = [];
-let bird = [];
 
 async function setup(){
     let imagesLoading = [];
@@ -65,6 +79,7 @@ async function setup(){
     }
     images.push(`img/bird0.png`);
     images.push(`img/bird1.png`);
+    images.push(`img/gratiot.png`);
 
     for(var i = 0; i < images.length; i++) {
         var imageObj = new Image();
@@ -81,7 +96,7 @@ async function setup(){
     imageArray = await Promise.all(imagesLoading);
     bird[0] = imageArray[25];
     bird[1] = imageArray[26];
-    console.log(bird);
+    gratiot = imageArray[27];
     console.log('done loading');
     window.requestAnimationFrame(myRenderTileSetup);
 }
@@ -124,6 +139,9 @@ function whatKey(e) {
     if(keys[38]) {
 	offsetY = Math.min(0, offsetY + 5);
         frame = (frame+1)%2;
+    }
+    if(keys[32]) {
+        gameStarted = true;
     }
 }
 
