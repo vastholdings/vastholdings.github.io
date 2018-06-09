@@ -34,6 +34,7 @@ let imageArray = [];
 let bird = [];
 let gratiot;
 let gameStarted;
+let gameInitialized;
 let timer;
 
     
@@ -46,8 +47,32 @@ function draw() {
             }, 400);
         }
     }
-    else {
+    else if(!gameInitialized) {
+        console.log('here');
         clearInterval(timer);
+        ['left', 'right', 'up', 'down'].forEach(function (elt) {
+            console.log(elt);
+            document.getElementById(elt).addEventListener('mouseup', function () {
+                keys[elt] = false;
+            });
+            document.getElementById(elt).addEventListener('mousedown', function () {
+                keys[elt] = true;
+            });
+
+
+            document.getElementById(elt).addEventListener('touchcancel', function () {
+                keys[elt] = false;
+            });
+
+            document.getElementById(elt).addEventListener('touchend', function () {
+                keys[elt] = false;
+            });
+
+            document.getElementById(elt).addEventListener('touchstart', function () {
+                keys[elt] = true;
+            });
+        });
+        gameInitialized = true;
     }
     ctx.drawImage(bird[frame], playerX - offsetX, playerY - offsetY, 100, 100);
 }
@@ -119,10 +144,16 @@ function myRenderTileSetup() {
                 }
             }
         }
+        whatKey();
+        draw();
         ctx.restore();
     }
-    whatKey();
-    draw();
+    else {
+        if(keys[32]) {
+            gameStarted = true;
+        }
+        draw();
+    }
     window.requestAnimationFrame(myRenderTileSetup);
 }
 function whatKey(e) {
@@ -146,28 +177,7 @@ function whatKey(e) {
         gameStarted = true;
     }
 }
-['left', 'right', 'up', 'down'].forEach(function (elt) {
-    console.log(elt);
-    document.getElementById(elt).addEventListener('mouseup', function () {
-        keys[elt] = false;
-    });
-    document.getElementById(elt).addEventListener('mousedown', function () {
-        keys[elt] = true;
-    });
 
-
-    document.getElementById(elt).addEventListener('touchcancel', function () {
-        keys[elt] = false;
-    });
-
-    document.getElementById(elt).addEventListener('touchend', function () {
-        keys[elt] = false;
-    });
-
-    document.getElementById(elt).addEventListener('touchstart', function () {
-        keys[elt] = true;
-    });
-});
 setup();
 
 document.getElementById('start').addEventListener('click', function() {
