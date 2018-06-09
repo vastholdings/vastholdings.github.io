@@ -24,16 +24,15 @@ var playerY = 20;
 // how far offset the canvas is
 var offsetX = 0;
 var offsetY = 0;
+let keys = [];
     
 function draw() {
-    ctx.save();
-    ctx.translate(offsetX, offsetY);
+    
     // clear the viewport
-    ctx.clearRect(-offsetX, -offsetY, 100,100);
     
     // draw the player
     ctx.fillStyle = 'red';
-    ctx.fillRect(playerX-offsetX, playerY-offsetY, 8, 8);
+    ctx.fillRect(playerX - offsetX, playerY - offsetY, 8, 8);
     
     // draw the other stuff
     var l = thingsOnMap.length;
@@ -50,18 +49,15 @@ function draw() {
     
     ctx.restore();
 }
-    
-can.addEventListener('keydown', function(e) {
-    console.log('here');
-    if (e.keyCode === 37) { // left
-        offsetX++;
-    } else if (e.keyCode === 39) { // right
-        offsetX--;
-    }
-    draw();
-}, false);
 
 
+
+window.addEventListener("keydown", function (e) {
+    keys[e.keyCode] = true;
+});
+window.addEventListener("keyup", function (e) {
+    keys[e.keyCode] = false;
+});
 
 
 //stackoverflow
@@ -77,9 +73,9 @@ let arrayHeight = 4;
 let imageWidth = 2000;
 let imageHeight = 1600;
 let imageArray = [];
-let imagesLoading = [];
 
 async function setup(){
+    let imagesLoading = [];
     for(var i = 0; i < 24; i++) {
         var imageObj = new Image();
         imagesLoading[i] = new Promise((resolve, error) => {
@@ -89,9 +85,6 @@ async function setup(){
             imageObj.src = `tiles/tile${pad(i,3)}.png`;
         });
     }
-    // populate your imageArray with the image tiles
-
-    // Now call requestAmimationFrame
     console.log('images loading');
     imageArray = await Promise.all(imagesLoading);
     console.log('done loading');
@@ -99,38 +92,40 @@ async function setup(){
 }
 
 
-function myRenderTileSetup(){ // this renders the tiles as they are avalible
-    console.log('myRenderTileSetup');
+function myRenderTileSetup() {
+    ctx.save();
+    ctx.translate(offsetX, offsetY);
+    ctx.clearRect(0, 0, can.width, can.height);
     var renderedCount = 0;
     for(let y = 0; y < arrayWidth; y++){
         for(let x = 0; x < arrayHeight; x++){
             pos = x + y * arrayWidth;
             if(imageArray[pos] && imageArray[pos].complete){
                 ctx.drawImage(imageArray[pos],(pos%arrayWidth)*imageWidth, Math.floor(pos/arrayWidth)*imageHeight);
-                imageArray[pos] = undefined;
+//                imageArray[pos] = undefined;
             } else {
                 renderedCount += 1;
             }
         }
     }
-     // when all tiles have been loaded and rendered switch to the game render function
-    if(renderedCount === arrayWidth*arrayHeight){
-          // background completely rendered
-          // switch rendering to the main game render.
-         window.requestAnimationFrame(myRenderMain);
-    } else{
-          // if not all available keep doing this till all tiles complete/ 
-         window.requestAnimationFrame(myRenderTileSetup);
+    whatKey();
+    draw();
+    window.requestAnimationFrame(myRenderTileSetup);
+}
+function whatKey(e) {
+    if(keys[37]) {
+	offsetX+=5;
+    }
+    if(keys[39]) {
+	offsetX-=5;
+    }
+    if(keys[40]) {
+	offsetY -= 5;
+    }
+    if(keys[38]) {
+	offsetY += 5;
     }
 }
 
-function myRenderMain(){
-    // render the background tiles canvas
-    // render game graphics.
-    // now ready for next frame.
-    console.log('myRenderMain');
-    draw();
-    //window.requestAnimationFrame(myRenderMain);
-}
 
 setup();
