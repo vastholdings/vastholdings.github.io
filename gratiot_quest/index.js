@@ -26,6 +26,7 @@ var offsetX = 0;
 var offsetY = 0;
 let keys = [];
 let frame = 0;
+let counter = 0;
 let arrayWidth = 5;
 let arrayHeight = 5;
 let imageWidth = 2000;
@@ -43,7 +44,7 @@ function draw() {
         ctx.drawImage(gratiot, 0, 0, 800, 600);
         if(!timer) {
             timer = setInterval(function() {
-                frame = (frame + 1) % 2;
+                frame = (frame+1)%2;
             }, 400);
         }
     }
@@ -159,19 +160,20 @@ function myRenderTileSetup() {
 function whatKey(e) {
     if(keys[37]||keys['left']) {
 	offsetX = Math.min(0, offsetX + 5);
-        frame = (frame+1)%2;
+        frame = Math.floor(((counter++) % 8)/4);
+                console.log(frame,counter);
     }
     if(keys[39]||keys['right']) {
 	offsetX = Math.max(-imageWidth*arrayWidth, offsetX - 5);
-        frame = (frame+1)%2;
+        frame = Math.floor(((counter++) % 8)/4);
     }
     if(keys[40]||keys['down']) {
 	offsetY = Math.max(-imageHeight*arrayHeight, offsetY - 5);
-        frame = (frame+1)%2;
+        frame = Math.floor(((counter++) % 8)/4);
     }
     if(keys[38]||keys['up']) {
 	offsetY = Math.min(0, offsetY + 5);
-        frame = (frame+1)%2;
+        frame = Math.floor(((counter++) % 8)/4);
     }
     if(keys[32]) {
         gameStarted = true;
