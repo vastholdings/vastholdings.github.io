@@ -18,8 +18,8 @@ var thingsOnMap = [
 ];
 
 // player's position
-var playerX = 0;
-var playerY = 0;
+var playerX = 100;
+var playerY = 100;
 
 // how far offset the canvas is
 var offsetX = 0;
@@ -182,7 +182,7 @@ function whatKey(e) {
         gameStarted = true;
     }
     if(check) {
-        let coord = hitmapContext.getImageData(Math.floor(-offsetX/10+7), Math.floor(-offsetY/10+7), 1, 1);
+        let coord = hitmapContext.getImageData(Math.floor(-offsetX/10+17), Math.floor(-offsetY/10+17), 1, 1);
         if(coord.data[2] == 221) {
             offsetX = oldOffsetX;
             offsetY = oldOffsetY;
