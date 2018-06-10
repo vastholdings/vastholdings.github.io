@@ -1,4 +1,4 @@
-var can = document.getElementById('canvas1');
+let can = document.getElementById('canvas1');
 var ctx = can.getContext('2d');
 // can.tabIndex = 1; // quick way to get focus so keypresses register
 ctx.font = '16px sans';
@@ -18,8 +18,8 @@ var thingsOnMap = [
 ];
 
 // player's position
-var playerX = 100;
-var playerY = 100;
+var playerX = 0;
+var playerY = 0;
 
 // how far offset the canvas is
 var offsetX = 0;
@@ -37,6 +37,8 @@ let gratiot;
 let gameStarted;
 let gameInitialized;
 let timer;
+let hitmapContext;
+let hitmapData;
 
     
 function draw() {
@@ -49,29 +51,15 @@ function draw() {
         }
     }
     else if(!gameInitialized) {
-        console.log('here');
         clearInterval(timer);
         ['left', 'right', 'up', 'down'].forEach(function (elt) {
-            console.log(elt);
-            document.getElementById(elt).addEventListener('mouseup', function () {
-                keys[elt] = false;
-            });
-            document.getElementById(elt).addEventListener('mousedown', function () {
-                keys[elt] = true;
-            });
-
-
-            document.getElementById(elt).addEventListener('touchcancel', function () {
-                keys[elt] = false;
-            });
-
-            document.getElementById(elt).addEventListener('touchend', function () {
-                keys[elt] = false;
-            });
-
-            document.getElementById(elt).addEventListener('touchstart', function () {
-                keys[elt] = true;
-            });
+            let node = document.getElementById(elt);
+            ['mousedown', 'touchstart'].forEach(evt =>
+                node.addEventListener(evt, () => { keys[elt] = true }, false)
+            );
+            ['mouseup', 'touchend', 'touchcancel'].forEach(evt =>
+                node.addEventListener(evt, () => { keys[elt] = false }, false)
+            );
         });
         gameInitialized = true;
     }
@@ -106,6 +94,7 @@ async function setup(){
     images.push(`img/bird0.png`);
     images.push(`img/bird1.png`);
     images.push(`img/gratiot.png`);
+    images.push(`img/hitmap.png`);
 
     for(var i = 0; i < images.length; i++) {
         var imageObj = new Image();
@@ -117,12 +106,19 @@ async function setup(){
         });
     }
 
-
     console.log('images loading');
     imageArray = await Promise.all(imagesLoading);
     bird[0] = imageArray[25];
     bird[1] = imageArray[26];
     gratiot = imageArray[27];
+
+    var canvas = document.createElement('canvas');
+    hitmapContext = canvas.getContext('2d');
+    var img = imageArray[28];
+    canvas.width = img.width;
+    canvas.height = img.height;
+    hitmapContext.drawImage(img, 0, 0 );
+    hitmapData = hitmapContext.getImageData(0, 0, canvas.width, canvas.height);
     console.log('done loading');
     window.requestAnimationFrame(myRenderTileSetup);
 }
@@ -158,25 +154,39 @@ function myRenderTileSetup() {
     window.requestAnimationFrame(myRenderTileSetup);
 }
 function whatKey(e) {
+    let oldOffsetX = offsetX;
+    let oldOffsetY = offsetY;
+    let speed = 5;
+    let check = false;
     if(keys[37]||keys['left']) {
-	offsetX = Math.min(0, offsetX + 5);
+	offsetX = Math.min(0, offsetX + speed);
         frame = Math.floor(((counter++) % 8)/4);
-                console.log(frame,counter);
+        check = true;
     }
     if(keys[39]||keys['right']) {
-	offsetX = Math.max(-imageWidth*arrayWidth, offsetX - 5);
+	offsetX = Math.max(-imageWidth*arrayWidth, offsetX - speed);
         frame = Math.floor(((counter++) % 8)/4);
+        check = true;
     }
     if(keys[40]||keys['down']) {
-	offsetY = Math.max(-imageHeight*arrayHeight, offsetY - 5);
+	offsetY = Math.max(-imageHeight*arrayHeight, offsetY - speed);
         frame = Math.floor(((counter++) % 8)/4);
+        check = true;
     }
     if(keys[38]||keys['up']) {
-	offsetY = Math.min(0, offsetY + 5);
+	offsetY = Math.min(0, offsetY + speed);
         frame = Math.floor(((counter++) % 8)/4);
+        check = true;
     }
     if(keys[32]) {
         gameStarted = true;
+    }
+    if(check) {
+        let coord = hitmapContext.getImageData(Math.floor(-offsetX/10+7), Math.floor(-offsetY/10+7), 1, 1);
+        if(coord.data[2] == 221) {
+            offsetX = oldOffsetX;
+            offsetY = oldOffsetY;
+        }
     }
 }
 
