@@ -40,3 +40,12 @@ button {
     justify-content:center;
     margin:100px;
 }
+
+
+@media only screen and (max-width: 1000px) {
+    /* For mobile phones: */
+    .container {
+        flex-direction: column;
+    }
+}
+
