@@ -1,0 +1,3 @@
+# vastholdings.us
+
+wabsite
