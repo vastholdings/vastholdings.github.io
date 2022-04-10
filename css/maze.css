@@ -1,76 +1,122 @@
-
 .game {
-    width: 480px;
-    height: 480px;
-    position: relative;
-    border: 2px solid #159;
-    border-radius: 2px;
+  width: 480px;
+  height: 480px;
+  position: relative;
+  border: 2px solid #159;
+  border-radius: 2px;
 }
 
 .score-box {
-    padding: 3px 8px 5px;
-    font-size: .8em;
-    color: white;
-    background: #159;
-    border-bottom-left-radius: 2px;
-    position: absolute;
-    right: 0;
+  padding: 3px 8px 5px;
+  font-size: 0.8em;
+  color: white;
+  background: #159;
+  border-bottom-left-radius: 2px;
+  position: absolute;
+  right: 0;
 }
 
 .player {
-    width: 24px;
-    height: 24px;
-    background-color: black;
+  width: 24px;
+  height: 24px;
+  background-color: black;
 }
 
 .solid,
 .player,
 .corn,
 .santa {
-    position: absolute;
+  position: absolute;
 }
 
 .wall {
-    color: transparent;
-    width: 48px;
-    height: 48px;
-    background-color: rgba(0, 125, 0, .3);
+  color: transparent;
+  width: 48px;
+  height: 48px;
+  background-color: rgba(0, 125, 0, 0.3);
 }
 
 .santa {
-    position: absolute;
-    display:block;
-    background-size: 30px;
-    width: 30px;
-    height: 30px;
-    background: url("../img/no-santa.png") no-repeat;
+  position: absolute;
+  display: block;
+  background-size: 30px;
+  width: 30px;
+  height: 30px;
+  background: url('../img/no-santa.png') no-repeat;
 }
-
 
 .corn {
-    position: absolute;
-    display:block;
-    background-size: 30px;
-    width: 30px;
-    height: 30px;
-    background: url("../img/corn.png") no-repeat;
+  position: absolute;
+  display: block;
+  background-size: 30px;
+  width: 30px;
+  height: 30px;
+  background: url('../img/corn.png') no-repeat;
 }
-
 
 .finish {
-    width: 96px;
-    height: 48px;
-    background-image: -webkit-linear-gradient(45deg, black 25%, transparent 25%, transparent 75%, black 75%, black), -webkit-linear-gradient(45deg, black 25%, transparent 25%, transparent 75%, black 75%, black);
-    background-image:    -moz-linear-gradient(45deg, black 25%, transparent 25%, transparent 75%, black 75%, black),    -moz-linear-gradient(45deg, black 25%, transparent 25%, transparent 75%, black 75%, black);
-    background-image:     -ms-linear-gradient(45deg, black 25%, transparent 25%, transparent 75%, black 75%, black),     -ms-linear-gradient(45deg, black 25%, transparent 25%, transparent 75%, black 75%, black);
-    background-image:      -o-linear-gradient(45deg, black 25%, transparent 25%, transparent 75%, black 75%, black),      -o-linear-gradient(45deg, black 25%, transparent 25%, transparent 75%, black 75%, black);
-    background-image:         linear-gradient(45deg, black 25%, transparent 25%, transparent 75%, black 75%, black),         linear-gradient(45deg, black 25%, transparent 25%, transparent 75%, black 75%, black);
+  width: 96px;
+  height: 48px;
+  background-image: -webkit-linear-gradient(
+      45deg,
+      black 25%,
+      transparent 25%,
+      transparent 75%,
+      black 75%,
+      black
+    ),
+    -webkit-linear-gradient(45deg, black 25%, transparent 25%, transparent 75%, black
+          75%, black);
+  background-image: -moz-linear-gradient(
+      45deg,
+      black 25%,
+      transparent 25%,
+      transparent 75%,
+      black 75%,
+      black
+    ),
+    -moz-linear-gradient(45deg, black 25%, transparent 25%, transparent 75%, black
+          75%, black);
+  background-image: -ms-linear-gradient(
+      45deg,
+      black 25%,
+      transparent 25%,
+      transparent 75%,
+      black 75%,
+      black
+    ),
+    -ms-linear-gradient(45deg, black 25%, transparent 25%, transparent 75%, black
+          75%, black);
+  background-image: -o-linear-gradient(
+      45deg,
+      black 25%,
+      transparent 25%,
+      transparent 75%,
+      black 75%,
+      black
+    ),
+    -o-linear-gradient(45deg, black 25%, transparent 25%, transparent 75%, black
+          75%, black);
+  background-image: linear-gradient(
+      45deg,
+      black 25%,
+      transparent 25%,
+      transparent 75%,
+      black 75%,
+      black
+    ),
+    linear-gradient(
+      45deg,
+      black 25%,
+      transparent 25%,
+      transparent 75%,
+      black 75%,
+      black
+    );
 
-    -webkit-background-size: 24px 24px;
-    -moz-background-size: 24px 24px;
-    background-size: 24px 24px;
+  -webkit-background-size: 24px 24px;
+  -moz-background-size: 24px 24px;
+  background-size: 24px 24px;
 
-    background-position: 0 0, 12px 12px
+  background-position: 0 0, 12px 12px;
 }
-
-

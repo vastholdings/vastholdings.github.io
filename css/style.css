@@ -1,51 +1,52 @@
 body {
-    font-family: sans-serif;
+  font-family: sans-serif;
 }
 
 .bands span {
-    display:block;
-    font-size: 40px;
+  display: block;
+  font-size: 40px;
 }
-
 
 #snowflakeContainer {
-    background-color: #aaa;
-    width: 100%;
+  background-color: #aaa;
+  width: 100%;
 }
 
-
 .awesome {
-  text-shadow: 0 1px 0 #58acfc, 0 2px 0 #79c9a9, 0 3px 0 #d8beeb, 0 4px 0 #b9c959, 0 5px 0 #8aaa2a, 0 6px 1px rgba(140, 155, 0, 0.72), 0 0 5px rgba(140, 155, 80, 0.72), 0 1px 3px rgba(0, 244, 0, 0.7), 0 3px 5px rgba(50, 97, 240, 0.7), 0 5px 10px rgba(127, 155, 0, 0.6), 0 10px 10px rgba(50, 127, 155, 0.6), 0 20px 20px rgba(174, 80, 80, 0.55), 0 40px 40px rgba(0, 45, 228, 0.50), 0 80px 80px rgba(155, 128, 0, 0.40)
+  text-shadow: 0 1px 0 #58acfc, 0 2px 0 #79c9a9, 0 3px 0 #d8beeb,
+    0 4px 0 #b9c959, 0 5px 0 #8aaa2a, 0 6px 1px rgba(140, 155, 0, 0.72),
+    0 0 5px rgba(140, 155, 80, 0.72), 0 1px 3px rgba(0, 244, 0, 0.7),
+    0 3px 5px rgba(50, 97, 240, 0.7), 0 5px 10px rgba(127, 155, 0, 0.6),
+    0 10px 10px rgba(50, 127, 155, 0.6), 0 20px 20px rgba(174, 80, 80, 0.55),
+    0 40px 40px rgba(0, 45, 228, 0.5), 0 80px 80px rgba(155, 128, 0, 0.4);
 }
 
 .post {
-    margin-bottom: 20px;
-    padding-bottom: 20px;
+  margin-bottom: 20px;
+  padding-bottom: 20px;
 }
 
 .post img {
-    width: 25%;
+  width: 25%;
 }
 
 button {
-    touch-action: manipulation;
+  touch-action: manipulation;
 }
 
 #gameboard {
-    touch-action: none;
+  touch-action: none;
 }
 
 .container {
-    display:flex;
-    justify-content:space-around;
-    margin:100px;
+  display: flex;
+  justify-content: space-around;
+  margin: 100px;
 }
-
 
 @media only screen and (max-width: 1000px) {
-    /* For mobile phones: */
-    .container {
-        flex-direction: column;
-    }
+  /* For mobile phones: */
+  .container {
+    flex-direction: column;
+  }
 }
-

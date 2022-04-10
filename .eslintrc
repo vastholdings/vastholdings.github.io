@@ -1,29 +1,14 @@
 {
-    "env": {
-        "browser": true,
-        "es6": true
-    },
-    "extends": "airbnb-es5",
-    "rules": {
-        "indent": [
-            "error",
-            4
-        ],
-        "linebreak-style": [
-            "error",
-            "unix"
-        ],
-        "quotes": [
-            "error",
-            "single"
-        ],
-        "semi": [
-            "error",
-            "always"
-        ],
-        "func-names": [
-            "error",
-            "never"
-        ]
-    }
+  "env": {
+    "browser": true,
+    "es6": true
+  },
+  "extends": "airbnb-es5",
+  "rules": {
+    "indent": ["error", 4],
+    "linebreak-style": ["error", "unix"],
+    "quotes": ["error", "single"],
+    "semi": ["error", "always"],
+    "func-names": ["error", "never"]
+  }
 }
